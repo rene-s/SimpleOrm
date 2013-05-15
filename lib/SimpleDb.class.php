@@ -92,7 +92,7 @@ abstract class SimpleDb
 
     $dir = dirname(static::$dbPath);
 
-    if (!file_exists($dir)) {
+    if (!file_exists($dir) && static::$dbPath !== ":memory:") {
       mkdir($dir);
     }
 
