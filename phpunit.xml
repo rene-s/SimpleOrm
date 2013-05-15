@@ -1,0 +1,10 @@
+<phpunit
+        bootstrap="./test/lib/bootstrap.php"
+        strict="true">
+    <filter>
+        <blacklist>
+            <directory>/usr/share</directory>
+            <directory>/usr/local/share</directory>
+        </blacklist>
+    </filter>
+</phpunit>
