@@ -2,7 +2,7 @@
 /**
  * SimpleOrm test
  *
- * @package    WikiGit
+ * @package    SimpleOrm
  * @subpackage TestUnit
  * @author     Rene Schmidt <rene@reneschmidt.de>
  */
