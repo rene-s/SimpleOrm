@@ -8,6 +8,13 @@
 abstract class SimpleOrm
 {
   /**
+   * Array with table fields
+   *
+   * @var array
+   */
+  protected $_payload = array();
+
+  /**
    * @var string
    */
   protected static $table = "set_table_in_model_derived_from_this_class";
@@ -34,8 +41,8 @@ abstract class SimpleOrm
    */
   public function get($what, $default = null)
   {
-    if (property_exists($this, $what)) {
-      return $this->{$what};
+    if (array_key_exists($what, $this->_payload)) {
+      return $this->_payload[$what];
     }
 
     return $default;
@@ -51,8 +58,8 @@ abstract class SimpleOrm
    */
   public function set($what, $value)
   {
-    if (property_exists($this, $what)) {
-      $this->{$what} = $value;
+    if (array_key_exists($what, $this->_payload)) {
+      $this->_payload[$what] = $value;
     }
   }
 
@@ -81,7 +88,7 @@ abstract class SimpleOrm
    */
   public static function findOneBy($field, $value)
   {
-    $result = self::findBy($field, $value);
+    $result = static::findBy($field, $value);
 
     if (empty($result)) {
       return null;
@@ -104,7 +111,9 @@ abstract class SimpleOrm
     $returnResults = array();
     $query = "SELECT * FROM " . static::$table . " WHERE " . $field . " = ?";
 
-    $sth = SimpleDb::getInst()->db->prepare($query);
+    $pdo = SimpleDb::getInst()->pdo;
+
+    $sth = $pdo->prepare($query);
 
     $sth->execute(array($value));
 
@@ -117,8 +126,70 @@ abstract class SimpleOrm
     return $returnResults;
   }
 
+  /**
+   * Insert record
+   *
+   * @return int Last record ID
+   */
+  public function insert()
+  {
+    $pdo = SimpleDb::getInst()->pdo;
+    //$sql = 'UPDATE %s (%s) VALUES (%s) WHERE id = ?';
+
+    //if(!$this->get("id")) {
+    $sql = 'INSERT INTO %s (%s) VALUES (%s)';
+    //}
+
+    $placeholders = array_fill(0, count($this->_payload), '?');
+    $sql = sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders));
+
+    $sth = $pdo->prepare($sql);
+
+    $pdo->beginTransaction();
+    $sth->execute(array_values($this->_payload));
+    $pdo->commit();
+
+    return $pdo->lastInsertId();
+  }
+
+  /**
+   * Update record
+   *
+   * @return int Last record ID
+   */
+  public function update()
+  {
+    $pdo = SimpleDb::getInst()->pdo;
+    $sql = 'UPDATE %s SET %s WHERE id = %d';
+
+    $placeholders = array_keys($this->_payload);
+
+    foreach ($placeholders AS $k => $val) {
+      $placeholders[$k] = sprintf("%s = ?", $val);
+    }
+
+    $sql = sprintf($sql, static::$table, implode(",", $placeholders), $this->get("id"));
+
+    $sth = $pdo->prepare($sql);
+
+    $pdo->beginTransaction();
+    $sth->execute(array_values($this->_payload));
+    $pdo->commit();
+
+    return $pdo->lastInsertId();
+  }
+
+  /**
+   * Save record
+   *
+   * @return int Last record ID
+   */
   public function save()
   {
+    if ($this->get("id")) {
+      return $this->update();
+    }
 
+    return $this->insert();
   }
 }

@@ -3,14 +3,19 @@
  * Sample Model instance
  *
  * @method Sample static::findOneBy()
- * @method Sample static::findBy()
  */
 class Sample extends SimpleOrm
 {
   /**
-   * @var string
+   * Array with table fields
+   *
+   * @var array
    */
-  protected $id, $someName;
+  protected $_payload = array(
+    "id" => null,
+    "someName" => null,
+    "bitmask" => null
+  );
 
   /**
    * @var string

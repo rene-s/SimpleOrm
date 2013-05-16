@@ -15,21 +15,13 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
    */
   public function setUp()
   {
-    if (SampleDb::$dbPath === ":memory:") {
-      SampleDb::getInst()->db->exec("DROP TABLE sample");
-    } else {
-      $dir = dirname(SampleDb::$dbPath);
+    $simpleDb = SimpleDb::getInst();
+    $simpleDb->pdo->exec("DROP TABLE IF EXISTS sample");
 
-      if (!file_exists($dir)) {
-        mkdir($dir);
-      }
-
-      if (file_exists(SampleDb::$dbPath)) {
-        unlink(SampleDb::$dbPath);
-      }
-    }
-
-    SampleDb::getInst()->__destruct();
+    $simpleDb->pdo->beginTransaction();
+    $simpleDb->pdo->exec('CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));');
+    $simpleDb->pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)");
+    $simpleDb->pdo->commit();
   }
 
   /**
@@ -41,7 +33,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
    */
   protected function createRecord(array $data)
   {
-    $pdo = SampleDb::getInst()->db;
+    $pdo = SimpleDb::getInst()->pdo;
 
     $pdo->exec(
       "INSERT INTO sample ("
@@ -57,7 +49,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
    */
   public function testCreateDbConn()
   {
-    $pdo = SampleDb::getInst()->db;
+    $pdo = SimpleDb::getInst()->pdo;
 
     $this->assertInstanceOf("PDO", $pdo);
   }
@@ -75,6 +67,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $this->assertInternalType("array", $samples);
     $this->assertSame(1, count($samples));
+    $this->assertInstanceOf("Sample", $samples[0]);
     $this->assertSame("/Sample/Two", $samples[0]->get("someName"));
   }
 
@@ -91,5 +84,50 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $this->assertInstanceOf("Sample", $sample);
     $this->assertSame("/Sample/One", $sample->get("someName"));
+  }
+
+  /**
+   * Test insert
+   *
+   * @return void
+   */
+  public function testInsert()
+  {
+    $newSample = new Sample();
+    $newSample->set("someName", "/Aye/Bee/Cee");
+    $newSample->set("bitmask", "1");
+
+    $id = $newSample->save();
+    $this->assertTrue($id > 0);
+
+    $sample = Sample::findOneBy("someName", "/Aye/Bee/Cee");
+
+    $this->assertInstanceOf("Sample", $sample);
+    $this->assertSame("/Aye/Bee/Cee", $sample->get("someName"));
+    $this->assertSame($id, $sample->get("id"));
+  }
+
+  /**
+   * Test update
+   *
+   * @return void
+   */
+  public function testUpdate()
+  {
+    $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
+
+    $sample = Sample::findOneBy("someName", "/Sample/One");
+
+    $this->assertInstanceOf("Sample", $sample);
+    $this->assertSame("/Sample/One", $sample->get("someName"));
+    $this->assertTrue($sample->get("id") > 0);
+
+    $sample->set("someName", "/Sample/Six");
+    $id = $sample->save();
+
+    $this->assertSame($sample->get("id"), $id);
+
+    $newSample = Sample::findOneBy("someName", "/Sample/Six");
+    $this->assertSame($id, $newSample->get("id"));
   }
 }

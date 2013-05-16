@@ -5,25 +5,33 @@
  * @package SimpleOrm
  * @author  Rene Schmidt <github@reneschmidt.de>
  */
-class SampleDb extends SimpleDb
+class SampleDb implements SimpleDbInterface
 {
   /**
-   * Path to sqlite database
-   *
-   * @var string
+   * @var SimpleDb
    */
-  public static $dbPath = ":memory:"; // "/tmp/.Db.sqlite";
+  public $db;
+
+  /**
+   * Constructor
+   *
+   * @param SimpleDb $simpleDb SimpleDb instance
+   */
+  public function __construct(SimpleDb $simpleDb)
+  {
+    $this->db = $simpleDb;
+  }
 
   /**
    * Set up database.
    *
    * @return mixed|void
    */
-  protected function setUp()
+  public function setUp()
   {
-    $this->db->beginTransaction();
-    $this->db->exec('CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));');
-    $this->db->exec("CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)");
-    $this->db->commit();
+    $this->db->pdo->beginTransaction();
+    $this->db->pdo->exec('CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));');
+    $this->db->pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)");
+    $this->db->pdo->commit();
   }
 }

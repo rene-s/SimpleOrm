@@ -1,30 +1,33 @@
 <?php
 /**
+ * Interface for db manager
+ */
+interface SimpleDbInterface
+{
+  public function setUp();
+}
+
+/**
  * Db class. Geared towards sqlite.
  *
  * @package SimpleOrm
  * @author  Rene Schmidt <github@reneschmidt.de>
  */
-abstract class SimpleDb
+class SimpleDb
 {
-  /**
-   * @var string
-   */
-  public static $dbPath = "";
-
   /**
    * Instance container
    *
    * @var SimpleDb
    */
-  private static $instance = null;
+  protected static $instance = null;
 
   /**
    * DB connection
    *
    * @var PDO
    */
-  public $db = null;
+  public $pdo = null;
 
   /**
    * Do not use
@@ -51,7 +54,7 @@ abstract class SimpleDb
   public static function getInst()
   {
     if (null === self::$instance) {
-      self::$instance = new static();
+      self::$instance = new self();
     }
 
     return self::$instance;
@@ -69,14 +72,6 @@ abstract class SimpleDb
   }
 
   /**
-   * Set up database
-   *
-   * @abstract
-   * @return mixed
-   */
-  abstract protected function setUp();
-
-  /**
    * Create DB conn.
    *
    * Creates tables if necessary
@@ -86,22 +81,26 @@ abstract class SimpleDb
    */
   public function createDbConn()
   {
-    if (empty(static::$dbPath)) {
-      throw new Exception("dbPath cannot be empty.");
-    }
+    preg_match("/^(sqlite|mysql):(.*)$/", DB_DSN, $matches);
 
-    $dir = dirname(static::$dbPath);
+    $dbPath = $matches[2];
 
-    if (!file_exists($dir) && static::$dbPath !== ":memory:") {
+    //$dir = dirname($dbPath);
+
+    /*if (!file_exists($dir) && $dbPath !== ":memory:") {
       mkdir($dir);
     }
 
-    $setUpDatabase = !file_exists(static::$dbPath) || filesize(static::$dbPath) < 1;
+    $setUpDatabase = !file_exists($dbPath) || filesize($dbPath) < 1;
+*/
+    $this->pdo = new PDO(DB_DSN);
+    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $this->db = new PDO('sqlite:' . static::$dbPath);
-
+    /*
     if ($setUpDatabase) {
-      $this->setUp();
-    }
+      $className = DB_MANAGER;
+      self::$manager = new $className($this);
+      self::$manager->setUp();
+    }*/
   }
 }
