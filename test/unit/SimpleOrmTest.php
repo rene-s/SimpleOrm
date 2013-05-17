@@ -127,4 +127,30 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
     $newSample = Sample::findOneBy("someName", "/Sample/Six");
     $this->assertSame($id, $newSample->get("id"));
   }
+
+  /**
+   * Test delete
+   *
+   * @return void
+   */
+  public function testDelete()
+  {
+    $newSample = new Sample();
+    $newSample->set("someName", "/Aye/Bee/Cee");
+    $newSample->set("bitmask", "1");
+
+    $id = $newSample->save();
+    $this->assertTrue($id > 0);
+
+    $newSample->del();
+
+    $this->assertNull($newSample->get("id"));
+
+    $sample = Sample::findOneBy("someName", "/Aye/Bee/Cee");
+    $this->assertNull($sample);
+
+    $samples = Sample::findBy("someName", "/Aye/Bee/Cee");
+    $this->assertInternalType("array", $samples);
+    $this->assertEmpty($samples);
+  }
 }

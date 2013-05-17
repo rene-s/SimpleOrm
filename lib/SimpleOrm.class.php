@@ -137,9 +137,13 @@ abstract class SimpleOrm
 
     $placeholders = array_fill(0, count($this->_payload), '?');
 
-    return $this->execute(
+    $id = $this->execute(
       sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders))
     );
+
+    $this->set("id", $id);
+
+    return $id;
   }
 
   /**
@@ -158,6 +162,26 @@ abstract class SimpleOrm
     }
 
     return $this->execute(sprintf($sql, static::$table, implode(",", $placeholders), $this->get("id")));
+  }
+
+  /**
+   * Delete record
+   *
+   * @return bool
+   */
+  public function del()
+  {
+    if (!$this->get("id")) {
+      return false;
+    }
+
+    $sql = sprintf("DELETE FROM %s WHERE id = ?", static::$table);
+
+    SimpleDb::getInst()->pdo->prepare($sql)->execute(array($this->get("id")));
+
+    $this->set("id", null);
+
+    return true;
   }
 
   /**
