@@ -1,6 +1,8 @@
 <?php
 /**
- * Simple ORM
+ * Simple ORM.
+ *
+ * Be aware that this ORM class expects every entity to have a numeric PK field with name "id".
  *
  * @package SimpleOrm
  * @author  Rene Schmidt <github@reneschmidt.de>

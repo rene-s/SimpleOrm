@@ -1,6 +1,6 @@
 <?php
 /**
- * Db class. Geared towards sqlite.
+ * Db class. Geared towards sqlite. This class does nothing special.
  *
  * @package SimpleOrm
  * @author  Rene Schmidt <github@reneschmidt.de>
@@ -60,7 +60,7 @@ class SimpleDb
    */
   public function __clone()
   {
-    throw new Exception("Cloning is forbidden", 10010);
+    throw new Exception("Cloning is forbidden", 1);
   }
 
   /**
@@ -73,26 +73,13 @@ class SimpleDb
    */
   public function createDbConn()
   {
-    preg_match("/^(sqlite|mysql):(.*)$/", DB_DSN, $matches);
-
-    $dbPath = $matches[2];
-
-    //$dir = dirname($dbPath);
-
-    /*if (!file_exists($dir) && $dbPath !== ":memory:") {
-      mkdir($dir);
+    if (!defined("DB_DSN")) {
+      throw new Exception("define('DB_DSN', 'sqlite::mermory::'); is missing");
     }
 
-    $setUpDatabase = !file_exists($dbPath) || filesize($dbPath) < 1;
-*/
+    preg_match("/^(sqlite|mysql):(.*)$/", DB_DSN, $matches);
+
     $this->pdo = new PDO(DB_DSN);
     $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    /*
-    if ($setUpDatabase) {
-      $className = DB_MANAGER;
-      self::$manager = new $className($this);
-      self::$manager->setUp();
-    }*/
   }
 }
