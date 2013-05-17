@@ -38,7 +38,7 @@ abstract class SimpleOrm
    *
    * @param array $data Data array
    *
-   * @return SimpleOrm
+   * @return static
    * @static
    */
   public static function getInst(array $data = array())
@@ -117,7 +117,7 @@ abstract class SimpleOrm
    * @param string $field Field name
    * @param mixed  $value Value
    *
-   * @return array
+   * @return SimpleOrm[]
    */
   public function findBy($field, $value)
   {
@@ -132,7 +132,7 @@ abstract class SimpleOrm
    * @param string $query  SQL Query
    * @param array  $values Values
    *
-   * @return array
+   * @return SimpleOrm[]
    */
   public function findByQuery($query, array $values)
   {
@@ -147,7 +147,7 @@ abstract class SimpleOrm
    *
    * @param PDOStatement $sth PDOStatement instance
    *
-   * @return array
+   * @return SimpleOrm[]
    */
   protected function collectRecords(PDOStatement $sth)
   {
@@ -168,7 +168,7 @@ abstract class SimpleOrm
    */
   public function insert()
   {
-    $sql = 'INSERT INTO %s (%s) VALUES (%s)';
+    $sql = "INSERT INTO " . "%s" . " (%s) VALUES (%s)";
 
     $placeholders = array_fill(0, count($this->_payload), '?');
 
@@ -188,7 +188,7 @@ abstract class SimpleOrm
    */
   public function update()
   {
-    $sql = 'UPDATE %s SET %s WHERE id = %d'; // only numeric PKs are supported and their name must be "id".
+    $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE id = " . "%d"; // only numeric PKs are supported and their name must be "id".
 
     $placeholders = array_keys($this->_payload);
 
@@ -210,7 +210,7 @@ abstract class SimpleOrm
       return false;
     }
 
-    $sql = sprintf("DELETE FROM %s WHERE id = ?", static::$table);
+    $sql = sprintf("DELETE FROM " . "%s" . " WHERE id = ?", static::$table);
 
     SimpleDb::getInst()->pdo->prepare($sql)->execute(array($this->get("id")));
 

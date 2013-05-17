@@ -34,8 +34,8 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $pdo->exec(
       "INSERT INTO sample ("
-          . implode(",", array_keys($data)) . ") VALUES ('"
-          . implode("','", array_values($data)) . "')"
+      . implode(",", array_keys($data)) . ") VALUES ('"
+      . implode("','", array_values($data)) . "')"
     );
   }
 
@@ -191,5 +191,20 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
     $sampleThree = new Sample();
     $sampleThree->fromArray(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 256));
     $this->assertSame(256, $sampleThree->get("bitmask"));
+  }
+
+  /**
+   * Test findOrCreate(). Test user-implemented method.
+   *
+   * @return void
+   */
+  public function testFindOrCreate()
+  {
+    $sampleOne = Sample::getInst()->findOneBy("someName", "/Dee/Eee/Eff");
+    $this->assertNull($sampleOne);
+
+    $sampleTwo = Sample::getInst()->findOrCreate("/Dee/Eee/Eff");
+    $this->assertInstanceOf("Sample", $sampleTwo);
+    $this->assertSame("/Dee/Eee/Eff", $sampleTwo->get("someName"));
   }
 }
