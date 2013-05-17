@@ -1,13 +1,5 @@
 <?php
 /**
- * Interface for db manager
- */
-interface SimpleDbInterface
-{
-  public function setUp();
-}
-
-/**
  * Db class. Geared towards sqlite.
  *
  * @package SimpleOrm

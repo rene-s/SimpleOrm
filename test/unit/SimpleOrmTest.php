@@ -16,12 +16,9 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   public function setUp()
   {
     $simpleDb = SimpleDb::getInst();
-    $simpleDb->pdo->exec("DROP TABLE IF EXISTS sample");
 
-    $simpleDb->pdo->beginTransaction();
-    $simpleDb->pdo->exec('CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));');
-    $simpleDb->pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)");
-    $simpleDb->pdo->commit();
+    $sampleDbConfig = SampleDbConfig::getInst($simpleDb);
+    $sampleDbConfig->setUp();
   }
 
   /**

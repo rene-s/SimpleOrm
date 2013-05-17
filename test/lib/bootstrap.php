@@ -7,11 +7,11 @@
  * @author     Rene Schmidt <github@reneschmidt.de>
  */
 
-//define("DB_DSN", 'sqlite::memory:');
-define("DB_DSN", 'sqlite:/tmp/db.sqlite');
-define("DB_MANAGER", 'SampleDb');
+define("DB_DSN", 'sqlite::memory:');
+//define("DB_DSN", 'sqlite:/tmp/db.sqlite');
 
 require_once __DIR__ . '/../../lib/SimpleDb.class.php';
 require_once __DIR__ . '/../../lib/SimpleOrm.class.php';
-require_once __DIR__ . '/../../lib/SampleDb.class.php';
+require_once __DIR__ . '/../../lib/SimpleDbConfig.class.php';
+require_once __DIR__ . '/../../lib/SampleDbConfig.class.php';
 require_once __DIR__ . '/../../lib/SampleModel.class.php';

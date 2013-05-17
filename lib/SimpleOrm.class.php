@@ -133,23 +133,13 @@ abstract class SimpleOrm
    */
   public function insert()
   {
-    $pdo = SimpleDb::getInst()->pdo;
-    //$sql = 'UPDATE %s (%s) VALUES (%s) WHERE id = ?';
-
-    //if(!$this->get("id")) {
     $sql = 'INSERT INTO %s (%s) VALUES (%s)';
-    //}
 
     $placeholders = array_fill(0, count($this->_payload), '?');
-    $sql = sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders));
 
-    $sth = $pdo->prepare($sql);
-
-    $pdo->beginTransaction();
-    $sth->execute(array_values($this->_payload));
-    $pdo->commit();
-
-    return $pdo->lastInsertId();
+    return $this->execute(
+      sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders))
+    );
   }
 
   /**
@@ -159,8 +149,7 @@ abstract class SimpleOrm
    */
   public function update()
   {
-    $pdo = SimpleDb::getInst()->pdo;
-    $sql = 'UPDATE %s SET %s WHERE id = %d';
+    $sql = 'UPDATE %s SET %s WHERE id = %d'; // only numeric PKs are supported and their name must be "id".
 
     $placeholders = array_keys($this->_payload);
 
@@ -168,13 +157,22 @@ abstract class SimpleOrm
       $placeholders[$k] = sprintf("%s = ?", $val);
     }
 
-    $sql = sprintf($sql, static::$table, implode(",", $placeholders), $this->get("id"));
+    return $this->execute(sprintf($sql, static::$table, implode(",", $placeholders), $this->get("id")));
+  }
 
+  /**
+   * Execute SQL query
+   *
+   * @param string $sql SQL query
+   *
+   * @return int Last record ID
+   */
+  public function execute($sql)
+  {
+    $pdo = SimpleDb::getInst()->pdo;
     $sth = $pdo->prepare($sql);
 
-    $pdo->beginTransaction();
     $sth->execute(array_values($this->_payload));
-    $pdo->commit();
 
     return $pdo->lastInsertId();
   }
