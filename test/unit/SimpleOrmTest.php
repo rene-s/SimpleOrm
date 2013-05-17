@@ -60,7 +60,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   {
     $this->createRecord(array("id" => 1, "someName" => "/Sample/Two"));
 
-    $samples = Sample::findBy("someName", "/Sample/Two");
+    $samples = Sample::getInst()->findBy("someName", "/Sample/Two");
 
     $this->assertInternalType("array", $samples);
     $this->assertSame(1, count($samples));
@@ -77,7 +77,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   {
     $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
 
-    $sample = Sample::findOneBy("someName", "/Sample/One");
+    $sample = Sample::getInst()->findOneBy("someName", "/Sample/One");
 
     $this->assertInstanceOf("Sample", $sample);
     $this->assertSame("/Sample/One", $sample->get("someName"));
@@ -97,7 +97,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
     $id = $newSample->save();
     $this->assertTrue($id > 0);
 
-    $sample = Sample::findOneBy("someName", "/Aye/Bee/Cee");
+    $sample = Sample::getInst()->findOneBy("someName", "/Aye/Bee/Cee");
 
     $this->assertInstanceOf("Sample", $sample);
     $this->assertSame("/Aye/Bee/Cee", $sample->get("someName"));
@@ -113,7 +113,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   {
     $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
 
-    $sample = Sample::findOneBy("someName", "/Sample/One");
+    $sample = Sample::getInst()->findOneBy("someName", "/Sample/One");
 
     $this->assertInstanceOf("Sample", $sample);
     $this->assertSame("/Sample/One", $sample->get("someName"));
@@ -124,7 +124,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $this->assertSame($sample->get("id"), $id);
 
-    $newSample = Sample::findOneBy("someName", "/Sample/Six");
+    $newSample = Sample::getInst()->findOneBy("someName", "/Sample/Six");
     $this->assertSame($id, $newSample->get("id"));
   }
 
@@ -137,13 +137,13 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   {
     $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
 
-    $samples = Sample::findByQuery("SELECT * FROM sample WHERE id = ?", array(1));
+    $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE id = ?", array(1));
 
     $this->assertInternalType("array", $samples);
     $this->assertSame(1, count($samples));
     $this->assertEquals(1, $samples[0]->get("id"));
 
-    $samples = Sample::findByQuery("SELECT * FROM sample WHERE id > ?", array(1));
+    $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE id > ?", array(1));
 
     $this->assertInternalType("array", $samples);
     $this->assertEmpty($samples);
@@ -167,11 +167,29 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $this->assertNull($newSample->get("id"));
 
-    $sample = Sample::findOneBy("someName", "/Aye/Bee/Cee");
+    $sample = Sample::getInst()->findOneBy("someName", "/Aye/Bee/Cee");
     $this->assertNull($sample);
 
-    $samples = Sample::findBy("someName", "/Aye/Bee/Cee");
+    $samples = Sample::getInst()->findBy("someName", "/Aye/Bee/Cee");
     $this->assertInternalType("array", $samples);
     $this->assertEmpty($samples);
+  }
+
+  /**
+   * Test fromArray()
+   *
+   * @return void
+   */
+  public function testFromArray()
+  {
+    $sampleOne = new Sample(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 64));
+    $this->assertSame(64, $sampleOne->get("bitmask"));
+
+    $sampleTwo = Sample::getInst(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 128));
+    $this->assertSame(128, $sampleTwo->get("bitmask"));
+
+    $sampleThree = new Sample();
+    $sampleThree->fromArray(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 256));
+    $this->assertSame(256, $sampleThree->get("bitmask"));
   }
 }

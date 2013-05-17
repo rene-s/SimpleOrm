@@ -32,6 +32,19 @@ abstract class SimpleOrm
   }
 
   /**
+   * Create instance
+   *
+   * @param array $data Data array
+   *
+   * @return SimpleOrm
+   * @static
+   */
+  public static function getInst(array $data = array())
+  {
+    return new static($data);
+  }
+
+  /**
    * Getter
    *
    * @param string     $what    Name of property to get
@@ -84,12 +97,10 @@ abstract class SimpleOrm
    * @param mixed  $value Value
    *
    * @return null|SimpleOrm
-   * @static
-   * @todo Investigate options for getting rid of static members
    */
-  public static function findOneBy($field, $value)
+  public function findOneBy($field, $value)
   {
-    $result = static::findBy($field, $value);
+    $result = $this->findBy($field, $value);
 
     if (empty($result)) {
       return null;
@@ -105,14 +116,12 @@ abstract class SimpleOrm
    * @param mixed  $value Value
    *
    * @return array
-   * @static
-   * @todo Investigate options for getting rid of static members
    */
-  public static function findBy($field, $value)
+  public function findBy($field, $value)
   {
     $query = "SELECT * FROM " . static::$table . " WHERE " . $field . " = ?";
 
-    return static::findByQuery($query, array($value));
+    return $this->findByQuery($query, array($value));
   }
 
   /**
@@ -122,15 +131,13 @@ abstract class SimpleOrm
    * @param array  $values Values
    *
    * @return array
-   * @static
-   * @todo Investigate options for getting rid of static members
    */
-  public static function findByQuery($query, array $values)
+  public function findByQuery($query, array $values)
   {
     $sth = SimpleDb::getInst()->pdo->prepare($query);
     $sth->execute($values);
 
-    return static::collectRecords($sth);
+    return $this->collectRecords($sth);
   }
 
   /**
@@ -139,10 +146,8 @@ abstract class SimpleOrm
    * @param PDOStatement $sth PDOStatement instance
    *
    * @return array
-   * @static
-   * @todo Investigate options for getting rid of static members
    */
-  protected static function collectRecords(PDOStatement $sth)
+  protected function collectRecords(PDOStatement $sth)
   {
     $returnResults = array();
     $rawResults = $sth->fetchAll(PDO::FETCH_ASSOC);

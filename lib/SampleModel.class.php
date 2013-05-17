@@ -3,6 +3,7 @@
  * Sample Model instance
  *
  * @method Sample static::findOneBy()
+ * @method Sample static::getInst()
  */
 class Sample extends SimpleOrm
 {
