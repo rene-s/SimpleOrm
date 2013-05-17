@@ -85,6 +85,7 @@ abstract class SimpleOrm
    *
    * @return null|SimpleOrm
    * @static
+   * @todo Investigate options for getting rid of static members
    */
   public static function findOneBy($field, $value)
   {
@@ -105,18 +106,45 @@ abstract class SimpleOrm
    *
    * @return array
    * @static
+   * @todo Investigate options for getting rid of static members
    */
   public static function findBy($field, $value)
   {
-    $returnResults = array();
     $query = "SELECT * FROM " . static::$table . " WHERE " . $field . " = ?";
 
-    $pdo = SimpleDb::getInst()->pdo;
+    return static::findByQuery($query, array($value));
+  }
 
-    $sth = $pdo->prepare($query);
+  /**
+   * Find records by query
+   *
+   * @param string $query  SQL Query
+   * @param array  $values Values
+   *
+   * @return array
+   * @static
+   * @todo Investigate options for getting rid of static members
+   */
+  public static function findByQuery($query, array $values)
+  {
+    $sth = SimpleDb::getInst()->pdo->prepare($query);
+    $sth->execute($values);
 
-    $sth->execute(array($value));
+    return static::collectRecords($sth);
+  }
 
+  /**
+   * Collect records
+   *
+   * @param PDOStatement $sth PDOStatement instance
+   *
+   * @return array
+   * @static
+   * @todo Investigate options for getting rid of static members
+   */
+  protected static function collectRecords(PDOStatement $sth)
+  {
+    $returnResults = array();
     $rawResults = $sth->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($rawResults AS $rawResult) {

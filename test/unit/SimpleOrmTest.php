@@ -129,6 +129,27 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
   }
 
   /**
+   * Test findByQuery
+   *
+   * @return void
+   */
+  public function testFindByQuery()
+  {
+    $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
+
+    $samples = Sample::findByQuery("SELECT * FROM sample WHERE id = ?", array(1));
+
+    $this->assertInternalType("array", $samples);
+    $this->assertSame(1, count($samples));
+    $this->assertEquals(1, $samples[0]->get("id"));
+
+    $samples = Sample::findByQuery("SELECT * FROM sample WHERE id > ?", array(1));
+
+    $this->assertInternalType("array", $samples);
+    $this->assertEmpty($samples);
+  }
+
+  /**
    * Test delete
    *
    * @return void
