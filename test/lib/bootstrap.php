@@ -7,7 +7,8 @@
  * @author     Rene Schmidt <github@reneschmidt.de>
  */
 
-define("DB_DSN", 'sqlite::memory:');
+define("DB_FILE", ":memory:");
+define("DB_DSN", 'sqlite:' . DB_FILE);
 //define("DB_DSN", 'sqlite:/tmp/db.sqlite');
 
 require_once __DIR__ . '/../../lib/SimpleDb.class.php';

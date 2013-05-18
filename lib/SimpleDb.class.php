@@ -73,11 +73,9 @@ class SimpleDb
    */
   public function createDbConn()
   {
-    if (!defined("DB_DSN")) {
-      throw new Exception("define('DB_DSN', 'sqlite::mermory::'); is missing");
+    if (!defined("DB_DSN") || !defined("DB_FILE")) {
+      throw new Exception("Look up docs on how to set up DB connection");
     }
-
-    preg_match("/^(sqlite|mysql):(.*)$/", DB_DSN, $matches);
 
     $this->pdo = new PDO(DB_DSN);
     $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
