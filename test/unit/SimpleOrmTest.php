@@ -207,4 +207,15 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
     $this->assertInstanceOf("Sample", $sampleTwo);
     $this->assertSame("/Dee/Eee/Eff", $sampleTwo->get("someName"));
   }
+  /**
+   * Test toArray()
+   *
+   * @return void
+   */
+  public function testToArray()
+  {
+    $sampleOne = Sample::getInst(array("someName" => "/Dee/Eee/Eff"));
+
+    $this->assertSame(array("id"=>null, "someName" => "/Dee/Eee/Eff", "bitmask" => null), $sampleOne->toArray());
+  }
 }

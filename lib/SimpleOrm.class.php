@@ -249,4 +249,14 @@ abstract class SimpleOrm
 
     return $this->insert();
   }
+
+  /**
+   * Return instance as array
+   *
+   * @return array
+   */
+  public function toArray()
+  {
+   return $this->_payload;
+  }
 }
