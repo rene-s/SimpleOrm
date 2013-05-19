@@ -38,7 +38,7 @@ class SimpleDb
   }
 
   /**
-   * Create RuntimeData instance
+   * Create SimpleDb instance
    *
    * @static
    * @return SimpleDb
