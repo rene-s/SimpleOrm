@@ -1,4 +1,7 @@
 <?php
+
+namespace SimpleOrm;
+
 /**
  * Simple ORM.
  *
@@ -145,14 +148,14 @@ abstract class SimpleOrm
   /**
    * Collect records
    *
-   * @param PDOStatement $sth PDOStatement instance
+   * @param \PDOStatement $sth PDOStatement instance
    *
    * @return SimpleOrm[]
    */
-  protected function collectRecords(PDOStatement $sth)
+  protected function collectRecords(\PDOStatement $sth)
   {
     $returnResults = array();
-    $rawResults = $sth->fetchAll(PDO::FETCH_ASSOC);
+    $rawResults = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
     foreach ($rawResults AS $rawResult) {
       $returnResults[] = new static($rawResult);
@@ -257,6 +260,6 @@ abstract class SimpleOrm
    */
   public function toArray()
   {
-   return $this->_payload;
+    return $this->_payload;
   }
 }

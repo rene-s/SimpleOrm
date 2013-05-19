@@ -1,4 +1,7 @@
 <?php
+
+namespace SimpleOrm;
+
 /**
  * Sample db config
  *

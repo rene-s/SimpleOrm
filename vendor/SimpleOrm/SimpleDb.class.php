@@ -1,4 +1,7 @@
 <?php
+
+namespace SimpleOrm;
+
 /**
  * Db class. Geared towards sqlite. This class does nothing special.
  *
@@ -17,7 +20,7 @@ class SimpleDb
   /**
    * DB connection
    *
-   * @var PDO
+   * @var \PDO
    */
   public $pdo = null;
 
@@ -56,11 +59,11 @@ class SimpleDb
    * Disable cloning
    *
    * @return void
-   * @throws Exception
+   * @throws \Exception
    */
   public function __clone()
   {
-    throw new Exception("Cloning is forbidden", 1);
+    throw new \Exception("Cloning is forbidden", 1);
   }
 
   /**
@@ -69,15 +72,15 @@ class SimpleDb
    * Creates tables if necessary
    *
    * @return void
-   * @throws Exception
+   * @throws \Exception
    */
   public function createDbConn()
   {
     if (!defined("DB_DSN") || !defined("DB_FILE")) {
-      throw new Exception("Look up docs on how to set up DB connection");
+      throw new \Exception("Look up docs on how to set up DB connection");
     }
 
-    $this->pdo = new PDO(DB_DSN);
-    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $this->pdo = new \PDO(DB_DSN);
+    $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
   }
 }
