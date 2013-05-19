@@ -28,8 +28,8 @@ numeric PK named "id".
 
 1. Set two constants:
 
-   define("DB_FILE", ":memory:"); // or path to sqlite file: define("DB_FILE", "/path/to/database.sqlite");
-   define("DB_DSN", 'sqlite:' . DB_FILE);
+       define("DB_FILE", ":memory:"); // or path to sqlite file: define("DB_FILE", "/path/to/database.sqlite");
+       define("DB_DSN", 'sqlite:' . DB_FILE);
 
 2. Provide database setup class.
 
@@ -41,7 +41,7 @@ numeric PK named "id".
 
    Let's assume you have a table like this:
 
-   CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));
+       CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));
 
    Then create an appropriate model class like this:
 
