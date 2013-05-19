@@ -9,6 +9,13 @@ This is just a no-frills simple ORM class for PHP/sqlite. Project goals are to
 It is **not** a goal to be compatible with other DBMS than sqlite (at the moment) or to implement feature X that
 other ORM Y already has.
 
+# Author
+
+Me:
+
+1. https://www.reneschmidt.de/wiki/index.php/view/SimpleOrm/Start
+2. https://www.reneschmidt.de/
+
 # Licence
 
 GPL v3 or commercial licence :) from github@reneschmidt.de. Do not use this in your closed source project
