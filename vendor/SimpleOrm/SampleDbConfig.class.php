@@ -1,6 +1,8 @@
 <?php
 
-namespace SimpleOrm;
+use SimpleOrm\SimpleOrm;
+use SimpleOrm\SimpleDb;
+use SimpleOrm\SimpleDbConfig;
 
 /**
  * Sample db config

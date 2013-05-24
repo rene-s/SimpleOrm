@@ -1,16 +1,18 @@
 <?php
 
-namespace SimpleOrm;
+use SimpleOrm\SimpleOrm;
+use SimpleOrm\SimpleDb;
+use SimpleOrm\SimpleDbConfig;
 
 /**
  * Sample Model instance.
  *
  * Define correct type hinting like this:
  *
- * @method \SimpleOrm\Sample findOneBy()
- * @method \SimpleOrm\Sample[] findBy()
- * @method \SimpleOrm\Sample[] findByQuery()
- * @method \SimpleOrm\Sample[] collectRecords()
+ * @method Sample findOneBy()
+ * @method Sample[] findBy()
+ * @method Sample[] findByQuery()
+ * @method Sample[] collectRecords()
  */
 class Sample extends SimpleOrm
 {
