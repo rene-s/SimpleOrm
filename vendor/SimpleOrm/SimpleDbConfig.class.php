@@ -56,11 +56,11 @@ abstract class SimpleDbConfig
    * Disable cloning
    *
    * @return void
-   * @throws Exception
+   * @throws \Exception
    */
   public function __clone()
   {
-    throw new Exception("Cloning is forbidden", 10010);
+    throw new \Exception("Cloning is forbidden", 10010);
   }
 
   /**
