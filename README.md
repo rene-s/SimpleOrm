@@ -1,13 +1,18 @@
 # SimpleOrm
 Immature. Do not use.
 
-This is just a no-frills simple ORM class for PHP/sqlite. Project goals are to
+This is a no-frills simple [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping) class for PHP/sqlite. Project goals are to
 
+  - provide ORM functionality
   - be as simple and small as possible
   - be clean.
 
 It is **not** a goal to be compatible with other DBMS than sqlite (at the moment) or to implement feature X that
-other ORM Y already has.
+other ORM Y already has. MySQL support will follow later.
+
+# Download
+
+-[Source can be found and downloaded from Github](https://github.com/rene-s/SimpleOrm)
 
 # Author
 
@@ -29,8 +34,8 @@ numeric PK named "id".
 *Set two constants*
 
 ```php
-     define("DB_FILE", ":memory:"); // or path to sqlite file: define("DB_FILE", "/path/to/database.sqlite");
-     define("DB_DSN", 'sqlite:' . DB_FILE);
+    define("DB_FILE", ":memory:"); // or path to sqlite file: define("DB_FILE", "/path/to/database.sqlite");
+    define("DB_DSN", 'sqlite:' . DB_FILE);
 ```
 
 *Provide database setup class*
@@ -44,7 +49,11 @@ when the database does not exist yet.
 Let's assume you have a table like this:
 
 ```sql
-   CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));
+   CREATE TABLE sample (
+     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,
+     "someName" TEXT NOT null,
+     "bitmask" INTEGER NOT null DEFAULT (0)
+   );
 ```
 
 Then create an appropriate model class like this:
