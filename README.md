@@ -29,7 +29,7 @@ without paying me. I don't like that.
 # How to use
 
 First, SimpleOrm supports sqlite and MySQL at the moment. Secondly, SimpleOrm expects every table to have a
-numeric PK named "id".
+numeric PK and it must be given as the first field.
 
 *Set constants*
 
@@ -88,7 +88,7 @@ Then create an appropriate model class like this:
       * @var array
       */
      protected $_payload = array(
-       "id" => null,
+       "id" => null, // first field is primary key
        "someName" => null,
        "bitmask" => null
      );
