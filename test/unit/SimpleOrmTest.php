@@ -14,6 +14,11 @@ use SimpleOrm\SimpleDbConfig;
 class SimpleOrmTest extends PHPUnit_Framework_TestCase
 {
   /**
+   * @var bool
+   */
+  protected $isMySql = false;
+
+  /**
    * Set setup
    *
    * @return void
@@ -24,6 +29,8 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $sampleDbConfig = SampleDbConfig::getInst($simpleDb);
     $sampleDbConfig->setUp();
+
+    $this->isMySql = preg_match("/^mysql:/", DB_DSN) > 0;
   }
 
   /**
@@ -127,10 +134,15 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
     $sample->set("someName", "/Sample/Six");
     $id = $sample->save();
 
-    $this->assertSame($sample->get("id"), $id);
-
     $newSample = Sample::getInst()->findOneBy("someName", "/Sample/Six");
-    $this->assertSame($id, $newSample->get("id"));
+
+    if ($this->isMySql) {
+      $this->assertNotSame($sample->get("id"), $id);
+      $this->assertNotSame($id, $newSample->get("id"));
+    } else {
+      $this->assertSame($sample->get("id"), $id);
+      $this->assertSame($id, $newSample->get("id"));
+    }
   }
 
   /**

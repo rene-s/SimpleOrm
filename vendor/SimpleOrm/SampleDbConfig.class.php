@@ -36,8 +36,15 @@ class SampleDbConfig extends SimpleDbConfig
   {
     $this->simpleDb->pdo->beginTransaction();
     $this->simpleDb->pdo->exec("DROP TABLE IF EXISTS sample");
+
+    //sqlite
     $this->simpleDb->pdo->exec('CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,"someName" TEXT NOT null,"bitmask" INTEGER NOT null DEFAULT (0));');
     $this->simpleDb->pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)");
+
+    //mysql
+    //$this->simpleDb->pdo->exec('CREATE TABLE sample(`id` INTEGER unsigned NOT NULL AUTO_INCREMENT, `someName` TEXT NOT NULL , `bitmask` INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (`id`));');
+    //$this->simpleDb->pdo->exec("CREATE UNIQUE INDEX uniqueSomeNameIdx ON sample(someName(255))");
+
     $this->simpleDb->pdo->commit();
   }
 }

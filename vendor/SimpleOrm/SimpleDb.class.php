@@ -76,11 +76,22 @@ class SimpleDb
    */
   public function createDbConn()
   {
-    if (!defined("DB_DSN") || !defined("DB_FILE")) {
-      throw new \Exception("Look up docs on how to set up DB connection");
+    if (!defined("DB_DSN")) {
+      throw new \Exception("DB_DSN has not been set. Look up docs on how to set up DB connection");
     }
 
-    $this->pdo = new \PDO(DB_DSN);
+    $requireCredentials = preg_match("/^mysql:/i", DB_DSN) > 0;
+
+    if ($requireCredentials && (!defined('DB_USER') || !defined('DB_PASS'))) {
+      throw new \Exception("DB_USER and DB_PASS have not been set. Look up docs on how to set up DB connection");
+    }
+
+    if ($requireCredentials) {
+      $this->pdo = new \PDO(DB_DSN, DB_USER, DB_PASS);
+    } else {
+      $this->pdo = new \PDO(DB_DSN);
+    }
+
     $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
   }
 }
