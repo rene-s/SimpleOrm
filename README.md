@@ -28,14 +28,25 @@ without paying me. I don't like that.
 
 # How to use
 
-First, SimpleOrm only supports sqlite at the moment. Secondly, SimpleOrm expects every table to have a
+First, SimpleOrm supports sqlite and MySQL at the moment. Secondly, SimpleOrm expects every table to have a
 numeric PK named "id".
 
-*Set two constants*
+*Set constants*
 
 ```php
-    define("DB_FILE", ":memory:"); // or path to sqlite file: define("DB_FILE", "/path/to/database.sqlite");
-    define("DB_DSN", 'sqlite:' . DB_FILE);
+    // example Sqlite memory database
+    define('DB_DSN', 'sqlite::memory:');
+
+    // example Sqlite file database
+    define('DB_DSN', 'sqlite:/tmp/db.sqlite');
+
+    // example MySQL database on localhost
+    define('DB_DSN', 'mysql:host=localhost;port=3306;dbname=testdb');
+    define('DB_DSN', 'mysql:unix_socket=/tmp/mysql.sock;dbname=testdb');
+
+    // For MySQL, also define user name and password. Not used for Sqlite.
+    define('DB_USER', 'root');
+    define('DB_PASS', 'root');
 ```
 
 *Provide database setup class*
