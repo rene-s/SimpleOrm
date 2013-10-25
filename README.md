@@ -1,14 +1,14 @@
 # SimpleOrm
 Immature. Do not use.
 
-This is a no-frills simple [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping) class for PHP/sqlite. Project goals are to
+This is a no-frills simple [ORM](https://en.wikipedia.org/wiki/Object-relational_mapping) class for PHP/sqlite and MySQL. Project goals are to
 
   - provide ORM functionality
   - be as simple and small as possible
   - be clean.
 
-It is **not** a goal to be compatible with other DBMS than sqlite (at the moment) or to implement feature X that
-other ORM Y already has. MySQL support will follow later.
+It is **not** a goal to be compatible with other DBMS than sqlite and MySQL (at the moment) or to implement feature X that
+other ORM Y already has.
 
 # Download
 
