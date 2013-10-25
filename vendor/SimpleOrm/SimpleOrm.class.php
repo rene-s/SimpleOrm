@@ -25,6 +25,11 @@ abstract class SimpleOrm
   protected static $table = "set_table_in_model_derived_from_this_class";
 
   /**
+   * @var string
+   */
+  protected $pkFieldName = "";
+
+  /**
    * Constructor
    *
    * @param array $data Array with data to be set
@@ -34,6 +39,19 @@ abstract class SimpleOrm
     if (!empty($data)) {
       $this->fromArray($data);
     }
+
+    $this->setPkFieldName();
+  }
+
+  /**
+   * Set PK field name. Is usually the first field given.
+   *
+   * @return void
+   */
+  public function setPkFieldName()
+  {
+    $keys = array_keys($this->_payload);
+    $this->pkFieldName = $keys[0];
   }
 
   /**
@@ -179,7 +197,7 @@ abstract class SimpleOrm
       sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders))
     );
 
-    $this->set("id", $id);
+    $this->set($this->pkFieldName, $id);
 
     return $id;
   }
@@ -191,7 +209,7 @@ abstract class SimpleOrm
    */
   public function update()
   {
-    $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE id = " . "%d"; // only numeric PKs are supported and their name must be "id".
+    $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE %s = " . "%d"; // only numeric PKs are supported and their name must be "id".
 
     $placeholders = array_keys($this->_payload);
 
@@ -199,7 +217,9 @@ abstract class SimpleOrm
       $placeholders[$k] = sprintf("%s = ?", $val);
     }
 
-    return $this->execute(sprintf($sql, static::$table, implode(",", $placeholders), $this->get("id")));
+    return $this->execute(
+      sprintf($sql, static::$table, implode(",", $placeholders), $this->pkFieldName, $this->get($this->pkFieldName))
+    );
   }
 
   /**
@@ -209,15 +229,15 @@ abstract class SimpleOrm
    */
   public function del()
   {
-    if (!$this->get("id")) {
+    if (!$this->get($this->pkFieldName)) {
       return false;
     }
 
-    $sql = sprintf("DELETE FROM " . "%s" . " WHERE id = ?", static::$table);
+    $sql = sprintf("DELETE FROM " . "%s" . " WHERE " . $this->pkFieldName . " = ?", static::$table);
 
-    SimpleDb::getInst()->pdo->prepare($sql)->execute(array($this->get("id")));
+    SimpleDb::getInst()->pdo->prepare($sql)->execute(array($this->get($this->pkFieldName)));
 
-    $this->set("id", null);
+    $this->set($this->pkFieldName, null);
 
     return true;
   }
@@ -246,7 +266,7 @@ abstract class SimpleOrm
    */
   public function save()
   {
-    if ($this->get("id")) {
+    if ($this->get($this->pkFieldName)) {
       return $this->update();
     }
 

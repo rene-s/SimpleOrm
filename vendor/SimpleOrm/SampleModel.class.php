@@ -22,7 +22,7 @@ class Sample extends SimpleOrm
    * @var array
    */
   protected $_payload = array(
-    "id" => null,
+    "id" => null, // first field is primary key
     "someName" => null,
     "bitmask" => null
   );
