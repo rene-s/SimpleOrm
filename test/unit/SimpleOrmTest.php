@@ -25,9 +25,15 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
    */
   public function setUp()
   {
+    $className = null;
+
+    if (mt_rand(0, 9) > 5) {
+      $className = "SampleDbConfig"; // test *not* using late static binding
+    }
+
     $simpleDb = SimpleDb::getInst();
 
-    $sampleDbConfig = SampleDbConfig::getInst($simpleDb);
+    $sampleDbConfig = SampleDbConfig::getInst($simpleDb, $className);
     $sampleDbConfig->setUp();
 
     $this->isMySql = preg_match("/^mysql:/", DB_DSN) > 0;
@@ -207,6 +213,24 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
     $sampleThree = new Sample();
     $sampleThree->fromArray(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 256));
+    $this->assertSame(256, $sampleThree->get("bitmask"));
+  }
+
+  /**
+   * Test fromArray(), same as above but also give model class name as if using PHP 5.2
+   *
+   * @return void
+   */
+  public function testFromArrayOld()
+  {
+    $sampleOne = new Sample(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 64), 'Sample');
+    $this->assertSame(64, $sampleOne->get("bitmask"));
+
+    $sampleTwo = Sample::getInst(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 128), 'Sample');
+    $this->assertSame(128, $sampleTwo->get("bitmask"));
+
+    $sampleThree = new Sample();
+    $sampleThree->fromArray(array("id" => 1, "someName" => "/Dee/Eee/Eff", "bitmask" => 256), 'Sample');
     $this->assertSame(256, $sampleThree->get("bitmask"));
   }
 
