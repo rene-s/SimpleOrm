@@ -38,26 +38,16 @@ abstract class SimpleDbConfig
   /**
    * Create RuntimeData instance
    *
-   * @param SimpleDb    $simpleDb  instance
-   * @param String|null $className Optional model class name. Mandatory for PHP =< 5.2.
+   * @param SimpleDb $simpleDb  instance
    *
    * @return SimpleDbConfig
    * @static
    * @throws \Exception
    */
-  public static function getInst(SimpleDb $simpleDb, $className = null)
+  public static function getInst(SimpleDb $simpleDb)
   {
     if (null === static::$instance) {
-      $tooOld = version_compare(phpversion(), '5.3') == -1;
-
-      if ($tooOld || !is_null($className)) {
-        if (is_null($className)) {
-          throw new \Exception("Must give class name when using old PHP version.");
-        }
-        static::$instance = new $className($simpleDb);
-      } else {
-        static::$instance = new static($simpleDb);
-      }
+      static::$instance = new static($simpleDb);
     }
 
     return static::$instance;

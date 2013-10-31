@@ -57,25 +57,14 @@ abstract class SimpleOrm
   /**
    * Create instance
    *
-   * @param array       $data      Data array
-   * @param String|null $className Optional model class name. Mandatory for PHP =< 5.2.
+   * @param array $data Data array
    *
    * @return static
    * @static
    * @throws \Exception
    */
-  public static function getInst(array $data = array(), $className = null)
+  public static function getInst(array $data = array())
   {
-    if (!is_null($className)) {
-      return new $className($data);
-    }
-
-    $tooOld = version_compare(phpversion(), '5.3') == -1;
-
-    if ($tooOld) {
-      throw new \Exception("Must give class name when using old PHP version.");
-    }
-
     return new static($data);
   }
 
