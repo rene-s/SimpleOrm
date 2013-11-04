@@ -12,6 +12,10 @@ namespace SimpleOrm;
  */
 abstract class SimpleOrm
 {
+  const PAYLOAD_ORIGINAL = 0; // do not modify payload
+  const PAYLOAD_CLEAN = 1; // removes all NULL values
+  const PAYLOAD_CLEAN_SMART = 2; // removes all NULL values but not from PK field
+
   /**
    * Array with table fields
    *
@@ -212,7 +216,8 @@ abstract class SimpleOrm
   {
     $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE %s = " . "%d"; // only numeric PKs are supported and their name must be "id".
 
-    $placeholders = array_keys($this->_payload);
+    // remove NULL value fields from model instance so we do not set them NULL in the DB.
+    $placeholders = array_keys($this->getPayload());
 
     foreach ($placeholders AS $k => $val) {
       $placeholders[$k] = sprintf("%s = ?", $val);
@@ -221,6 +226,29 @@ abstract class SimpleOrm
     return $this->execute(
       sprintf($sql, static::$table, implode(",", $placeholders), $this->pkFieldName, $this->get($this->pkFieldName))
     );
+  }
+
+  /**
+   * Get model instance payload
+   *
+   * @param int $cleanMode Clean nothing from payload or NULL values or NULL values except PK field.
+   *
+   * @return array
+   */
+  public function getPayload($cleanMode = self::PAYLOAD_CLEAN_SMART)
+  {
+    $result = array();
+
+    foreach ($this->_payload AS $key => $value) {
+      if (!is_null($value)
+          || ($cleanMode === self::PAYLOAD_CLEAN_SMART && $key === $this->pkFieldName)
+          || $cleanMode === self::PAYLOAD_ORIGINAL
+      ) {
+        $result[$key] = $value;
+      }
+    }
+
+    return $result;
   }
 
   /**
@@ -255,7 +283,8 @@ abstract class SimpleOrm
     $pdo = SimpleDb::getInst()->pdo;
     $sth = $pdo->prepare($sql);
 
-    $sth->execute(array_values($this->_payload));
+    // save PK field value. Then remove NULL value fields from model instance so we do not set them NULL in the DB.
+    $sth->execute(array_values($this->getPayload()));
 
     return $pdo->lastInsertId();
   }
