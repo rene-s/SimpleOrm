@@ -1,5 +1,5 @@
 {
-  "name": "ReneSchmidt/SimpleOrm",
+  "name": "reneschmidt/simpleorm",
   "description": "Simple, no-frills ORM class.",
   "minimum-stability": "alpha",
   "require": {
