@@ -6,7 +6,7 @@
   },
   "keywords": ["database", "orm", "mysql", "sqlite"],
   "homepage": "https://reneschmidt.de/wiki/index.php/page/view/SimpleOrm,Start",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "authors": [
     {
       "name": "Rene Schmidt",
