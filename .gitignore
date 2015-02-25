@@ -5,3 +5,4 @@ vendor/composer/ClassLoader.php
 vendor/composer/autoload_real.php
 vendor/composer/autoload_classmap.php
 vendor/autoload.php
+vendor/SimpleOrm/.idea
