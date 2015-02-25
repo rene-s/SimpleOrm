@@ -10,6 +10,10 @@ This is a no-frills simple [ORM](https://en.wikipedia.org/wiki/Object-relational
 It is **not** a goal to be compatible with other DBMS than sqlite and MySQL (at the moment) or to implement feature X that
 other ORM Y already has.
 
+# Requirements
+
+PHP 5.3
+
 # Download
 
 -[Source can be found and downloaded from Github](https://github.com/rene-s/SimpleOrm)

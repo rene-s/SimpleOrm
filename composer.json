@@ -1,0 +1,14 @@
+{
+  "name": "ReneSchmidt/SimpleOrm",
+  "description": "Simple, no-frills ORM class.",
+  "minimum-stability": "alpha",
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "authors": [
+    {
+      "name": "Rene Schmidt",
+      "email": "composer@reneschmidt.de"
+    }
+  ]
+}
