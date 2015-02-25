@@ -21,9 +21,9 @@ define('DB_DSN', 'sqlite::memory:');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');
 
-require_once __DIR__ . '/../../src/SimpleDb.class.php';
-require_once __DIR__ . '/../../src/SimpleOrm.class.php';
-require_once __DIR__ . '/../../src/SimpleDbConfig.class.php';
-require_once __DIR__ . '/../../src/SampleDbConfig.class.php';
-require_once __DIR__ . '/../../src/SampleModel.class.php';
+require_once __DIR__ . '/../../src/SimpleOrm/SimpleDb.class.php';
+require_once __DIR__ . '/../../src/SimpleOrm/SimpleOrm.class.php';
+require_once __DIR__ . '/../../src/SimpleOrm/SimpleDbConfig.class.php';
+require_once __DIR__ . '/../../src/SimpleOrm/SampleDbConfig.class.php';
+require_once __DIR__ . '/../../src/SimpleOrm/SampleModel.class.php';
 

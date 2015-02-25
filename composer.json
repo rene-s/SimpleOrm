@@ -5,7 +5,7 @@
   "require": {
     "php": ">=5.3.0"
   },
-  "keywords": ["database","orm", "mysql", "sqlite"],
+  "keywords": ["database", "orm", "mysql", "sqlite"],
   "homepage": "https://reneschmidt.de/wiki/index.php/page/view/SimpleOrm,Start",
   "license": "GPLv3",
   "authors": [
@@ -13,5 +13,10 @@
       "name": "Rene Schmidt",
       "email": "rene+_pkg@reneschmidt.de"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "SimpleOrm\\": "src/SimpleOrm/"
+    }
+  }
 }
