@@ -156,4 +156,57 @@ How to update and delete records:
    $sample->del(); // record is deleted now.
 ```
 
+Full example:
+
+```php
+    <?php
+    require 'vendor/autoload.php';
+
+    // example MySQL database on localhost
+    define('DB_DSN', 'mysql:host=localhost;port=3306;dbname=wordpress');
+
+    // For MySQL, also define user name and password. Not used for Sqlite.
+    define('DB_USER', 'username');
+    define('DB_PASS', 'password');
+
+    use \SimpleOrm\SimpleOrm;
+
+    /**
+     * WpUserMeta Model instance.
+     *
+     * Define correct type hinting like this:
+     *
+     * @method WpUserMeta findOneBy()
+     * @method WpUserMeta[] findBy()
+     * @method WpUserMeta[] findByQuery()
+     * @method WpUserMeta[] collectRecords()
+     */
+    class WpUserMeta extends SimpleOrm
+    {
+      /**
+       * Array with table fields
+       *
+       * @var array
+       */
+      protected $_payload = array(
+        'umeta_id' => null,
+        'user_id' => null,
+        'meta_key' => null,
+        'meta_value' => null
+      );
+
+      /**
+       * @var string
+       */
+      protected static $table = 'wp_usermeta';
+    }
+
+    $user_metas = WpUserMeta::getInst()->findBy("meta_key", "description"); // returns array with "WpUserMeta" items
+
+    foreach ($user_metas AS $user_meta) {
+      print_r($user_meta->toArray());
+    }
+```
+
+
 Have fun.
