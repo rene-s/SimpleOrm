@@ -129,7 +129,7 @@ How to retrieve records:
    $sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
    print($sample->get("someName")); // prints "abc"
 
-   $samples = Sample::getInst()->findBy("someName", "abc")); // returns array with "Sample" items
+   $samples = Sample::getInst()->findBy("someName", "abc"); // returns array with "Sample" items
 
    foreach($samples AS $sample) {
         print($sample->get("someName")); // prints "abc"
