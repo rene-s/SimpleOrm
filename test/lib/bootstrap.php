@@ -26,4 +26,3 @@ require_once __DIR__ . '/../../src/SimpleOrm/SimpleOrm.class.php';
 require_once __DIR__ . '/../../src/SimpleOrm/SimpleDbConfig.class.php';
 require_once __DIR__ . '/../../src/SimpleOrm/SampleDbConfig.class.php';
 require_once __DIR__ . '/../../src/SimpleOrm/SampleModel.class.php';
-
