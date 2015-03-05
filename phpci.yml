@@ -11,6 +11,7 @@ test:
             - "phpunit.xml"
         directory:
             - "test/"
+        run_from: "phpunit/"
         coverage: "test/logs/coverage"
     php_mess_detector:
         allow_failures: true
