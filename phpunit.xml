@@ -12,4 +12,8 @@
             <directory>/usr/local/share</directory>
         </blacklist>
     </filter>
+    <logging>
+        <log type="tap" target="php://stdout"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+    </logging>
 </phpunit>
