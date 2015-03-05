@@ -1,6 +1,11 @@
 <phpunit
         bootstrap="./test/lib/bootstrap.php"
         strict="true">
+    <testsuites>
+        <testsuite name="SimpleOrm Test Suite">
+            <directory>./test/unit</directory>
+        </testsuite>
+    </testsuites>
     <filter>
         <blacklist>
             <directory>/usr/share</directory>
