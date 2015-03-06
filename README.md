@@ -16,7 +16,7 @@ PHP 5.3 + php-sqlite
 
 # Download
 
--[Source can be found and downloaded from Github](https://github.com/rene-s/SimpleOrm)
+  - [Source can be found and downloaded from Github](https://github.com/rene-s/SimpleOrm)
 
 # Author
 
