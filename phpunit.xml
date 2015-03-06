@@ -13,8 +13,6 @@
         </blacklist>
     </filter>
     <logging>
-        <log type="testdox" target="php://stdout"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
         <log type="coverage-html" target="/tmp/coverage/simpleorm-current" showUncoveredFiles="true"/>
     </logging>
 </phpunit>
