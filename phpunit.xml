@@ -1,6 +1,5 @@
 <phpunit
-        bootstrap="./test/lib/bootstrap.php"
-        strict="true">
+        bootstrap="./test/lib/bootstrap.php">
     <testsuites>
         <testsuite name="SimpleOrm Test Suite">
             <directory>./test/unit</directory>
@@ -13,6 +12,7 @@
         </blacklist>
     </filter>
     <logging>
-        <log type="coverage-html" target="/tmp/coverage/simpleorm-current" showUncoveredFiles="true"/>
+        <log type="tap" target="/tmp/phpunit-result/simpleorm-current-tap.txt"/>
+        <log type="coverage-html" target="/tmp/phpunit-result/simpleorm-current" showUncoveredFiles="true"/>
     </logging>
 </phpunit>
