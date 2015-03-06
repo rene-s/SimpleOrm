@@ -1,6 +1,5 @@
 <?php
 
-use SimpleOrm\SimpleOrm;
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
 
@@ -359,5 +358,36 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('bitmask', $payload);
         $this->assertArrayNotHasKey('someName', $payload);
         $this->assertArrayNotHasKey('id', $payload);
+    }
+
+    /**
+     * Verify that cloning of an SimpleDb instance is forbidden
+     */
+    public function testCloningSimpleDbForbidden()
+    {
+        $simpleDb = SimpleDb::getInst();
+
+        try {
+            $cloned = clone $simpleDb;
+            $this->fail("Exception expected, cloning SimpleDb is forbidden");
+        } catch (\Exception $e) {
+            $this->assertInstanceOf("\Exception", $e);
+        }
+    }
+
+    /**
+     * Verify that cloning of an SimpleDbConfig instance is forbidden
+     */
+    public function testCloningSimpleDbConfigbForbidden()
+    {
+        $simpleDb = SimpleDb::getInst();
+        $simpleDbConfig = SimpleDbConfig::getInst($simpleDb);
+
+        try {
+            $cloned = clone $simpleDbConfig;
+            $this->fail("Exception expected, cloning SimpleDbConfig is forbidden");
+        } catch (\Exception $e) {
+            $this->assertInstanceOf("\Exception", $e);
+        }
     }
 }

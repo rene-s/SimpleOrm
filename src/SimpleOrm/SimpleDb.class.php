@@ -33,14 +33,6 @@ class SimpleDb
     }
 
     /**
-     * Destructor
-     */
-    public function __destruct()
-    {
-        self::$instance = null;
-    }
-
-    /**
      * Create SimpleDb instance
      *
      * @static

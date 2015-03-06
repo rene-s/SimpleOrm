@@ -28,14 +28,6 @@ abstract class SimpleDbConfig
     }
 
     /**
-     * Destructor
-     */
-    public function __destruct()
-    {
-        static::$instance = null;
-    }
-
-    /**
      * Create RuntimeData instance
      *
      * @param SimpleDb $simpleDb instance
