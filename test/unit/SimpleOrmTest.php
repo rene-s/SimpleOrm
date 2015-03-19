@@ -2,6 +2,8 @@
 
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
+use SimpleOrm\Tests\Sample;
+use SimpleOrm\Tests\SampleDbConfig;
 
 /**
  * SimpleOrm test
@@ -75,7 +77,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
         $this->assertInternalType("array", $samples);
         $this->assertSame(1, count($samples));
-        $this->assertInstanceOf("Sample", $samples[0]);
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $samples[0]);
         $this->assertSame("/Sample/Two", $samples[0]->get("someName"));
     }
 
@@ -90,7 +92,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
         $sample = Sample::getInst()->findOneBy("someName", "/Sample/One");
 
-        $this->assertInstanceOf("Sample", $sample);
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $sample);
         $this->assertSame("/Sample/One", $sample->get("someName"));
     }
 
@@ -110,7 +112,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
         $sample = Sample::getInst()->findOneBy("someName", "/Aye/Bee/Cee");
 
-        $this->assertInstanceOf("Sample", $sample);
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $sample);
         $this->assertSame("/Aye/Bee/Cee", $sample->get("someName"));
         $this->assertSame($id, $sample->get("id"));
     }
@@ -126,7 +128,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
 
         $sample = Sample::getInst()->findOneBy("someName", "/Sample/One");
 
-        $this->assertInstanceOf("Sample", $sample);
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $sample);
         $this->assertSame("/Sample/One", $sample->get("someName"));
         $this->assertTrue($sample->get("id") > 0);
 
@@ -220,7 +222,7 @@ class SimpleOrmTest extends PHPUnit_Framework_TestCase
         $this->assertNull($sampleOne);
 
         $sampleTwo = Sample::getInst()->findOrCreate("/Dee/Eee/Eff");
-        $this->assertInstanceOf("Sample", $sampleTwo);
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $sampleTwo);
         $this->assertSame("/Dee/Eee/Eff", $sampleTwo->get("someName"));
     }
 

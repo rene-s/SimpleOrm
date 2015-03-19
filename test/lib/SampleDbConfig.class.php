@@ -1,6 +1,7 @@
 <?php
 
-use SimpleOrm\SimpleOrm;
+namespace SimpleOrm\Tests;
+
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
 

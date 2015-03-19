@@ -1,8 +1,8 @@
 <?php
 
+namespace SimpleOrm\Tests;
+
 use SimpleOrm\SimpleOrm;
-use SimpleOrm\SimpleDb;
-use SimpleOrm\SimpleDbConfig;
 
 /**
  * Sample Model instance.

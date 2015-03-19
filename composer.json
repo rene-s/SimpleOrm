@@ -17,5 +17,11 @@
     "psr-4": {
       "SimpleOrm\\": "src/SimpleOrm/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SimpleOrm\\": "src/SimpleOrm/",
+      "SimpleOrm\\Tests\\": "test/lib"
+    }
   }
 }
