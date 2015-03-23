@@ -8,17 +8,17 @@
  */
 
 // example Sqlite memory database
-define('DB_DSN', 'sqlite::memory:');
+$dsn = 'sqlite::memory:';
 
 // example Sqlite file database
-//define('DB_DSN', 'sqlite:/tmp/db.sqlite');
+//$dsn = 'sqlite:/tmp/db.sqlite');
 
 // example MySQL database on localhost
-//define('DB_DSN', 'mysql:host=localhost;port=3306;dbname=testdb');
-//define('DB_DSN', 'mysql:unix_socket=/tmp/mysql.sock;dbname=testdb');
+//$dsn = 'mysql:host=localhost;port=3306;dbname=testdb');
+//$dsn = 'mysql:unix_socket=/tmp/mysql.sock;dbname=testdb');
 
 // For MySQL, also define user name and password. Not used for Sqlite.
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
+$user = 'root';
+$pass = 'root';
 
 $autoloader = require 'vendor/autoload.php';

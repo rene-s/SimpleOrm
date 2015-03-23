@@ -6,10 +6,9 @@
         </testsuite>
     </testsuites>
     <filter>
-        <blacklist>
-            <directory>/usr/share</directory>
-            <directory>/usr/local/share</directory>
-        </blacklist>
+        <whitelist>
+            <directory>./src/</directory>
+        </whitelist>
     </filter>
     <logging>
         <log type="tap" target="/tmp/phpunit-result/simpleorm-current-tap.txt"/>

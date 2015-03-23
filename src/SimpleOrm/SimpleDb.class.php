@@ -27,21 +27,28 @@ class SimpleDb
     /**
      * Do not use
      */
-    private function __construct()
+    private function __construct($dsn, $user = '', $pass = '')
     {
-        $this->createDbConn();
+        $this->createDbConn($dsn, $user, $pass);
     }
 
     /**
      * Create SimpleDb instance
      *
+     * @param string $dsn  DSN string
+     * @param string $user User name
+     * @param string $pass Password
      * @static
      * @return SimpleDb
+     * @throws \Exception
      */
-    public static function getInst()
+    public static function getInst($dsn = '', $user = '', $pass = '')
     {
         if (null === self::$instance) {
-            self::$instance = new self();
+            if (empty($dsn)) {
+                throw new \Exception('No DSN given');
+            }
+            self::$instance = new self($dsn, $user, $pass);
         }
 
         return self::$instance;
@@ -59,6 +66,14 @@ class SimpleDb
     }
 
     /**
+     * Destroy
+     */
+    public function destroy()
+    {
+        self::$instance = null;
+    }
+
+    /**
      * Create DB conn.
      *
      * Creates tables if necessary
@@ -66,22 +81,30 @@ class SimpleDb
      * @return void
      * @throws \Exception
      */
-    public function createDbConn()
+
+    /**
+     * Create DB conection
+     * @param string $dsn  DSN string
+     * @param string $user User name
+     * @param string $pass Password
+     * @throws \Exception
+     */
+    public function createDbConn($dsn, $user = '', $pass = '')
     {
-        if (!defined("DB_DSN")) {
-            throw new \Exception("DB_DSN has not been set. Look up docs on how to set up DB connection");
+        if (empty($dsn)) {
+            throw new \Exception("DSN has not been set. Look up docs on how to set up DB connection");
         }
 
-        $requireCredentials = preg_match("/^mysql:/i", DB_DSN) > 0;
+        $requireCredentials = preg_match("/^mysql:/i", $dsn) > 0;
 
-        if ($requireCredentials && (!defined('DB_USER') || !defined('DB_PASS'))) {
-            throw new \Exception("DB_USER and DB_PASS have not been set. Look up docs on how to set up DB connection");
+        if ($requireCredentials && (!empty($user) || !empty($pass))) {
+            throw new \Exception("User or pass have not been set. Look up docs on how to set up DB connection");
         }
 
         if ($requireCredentials) {
-            $this->pdo = new \PDO(DB_DSN, DB_USER, DB_PASS);
+            $this->pdo = new \PDO($dsn, $user, $pass);
         } else {
-            $this->pdo = new \PDO(DB_DSN);
+            $this->pdo = new \PDO($dsn);
         }
 
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

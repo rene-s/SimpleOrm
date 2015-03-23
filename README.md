@@ -35,23 +35,33 @@ without paying me. I don't like that.
 First, SimpleOrm supports sqlite and MySQL at the moment. Secondly, SimpleOrm expects every table to have a
 numeric PK and it must be given as the first field.
 
-*Set constants*
+*Set variables*
 
-```php
+    ```php
     // example Sqlite memory database
-    define('DB_DSN', 'sqlite::memory:');
+    $dsn = 'sqlite::memory:';
 
-    // example Sqlite file database
-    define('DB_DSN', 'sqlite:/tmp/db.sqlite');
+    // OR: example Sqlite file database
+    $dsn = 'sqlite:/tmp/db.sqlite';
 
-    // example MySQL database on localhost
-    define('DB_DSN', 'mysql:host=localhost;port=3306;dbname=testdb');
-    define('DB_DSN', 'mysql:unix_socket=/tmp/mysql.sock;dbname=testdb');
+    // OR: example MySQL database on localhost
+    $dsn = 'mysql:host=localhost;port=3306;dbname=testdb';
+    $dsn = 'mysql:unix_socket=/tmp/mysql.sock;dbname=testdb';
 
-    // For MySQL, also define user name and password. Not used for Sqlite.
-    define('DB_USER', 'root');
-    define('DB_PASS', 'root');
-```
+    // For MySQL, also define user name and password. **NOT** used for Sqlite.
+    $user = 'root';
+    $pass = 'root';
+
+    // Set up DB connection
+    $simpleDb = SimpleDb::getInst($dsn, $user, $pass);
+
+    // You need to provide your own implementation of SimpleDbConfig (here we use SampleDbConfig)
+    $sampleDbConfig = SampleDbConfig::getInst($simpleDb);
+
+    // Setup will create the database and the tables according to your SampleDbConfig implementation
+    // Obviously you want this to execute only during installation of the app.
+    $sampleDbConfig->setUp();
+    ```
 
 *Provide database setup class*
 
@@ -63,18 +73,18 @@ when the database does not exist yet.
 
 Let's assume you have a table like this:
 
-```sql
-   CREATE TABLE sample (
+   ```sql
+    CREATE TABLE sample (
      "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,
      "someName" TEXT NOT null,
      "bitmask" INTEGER NOT null DEFAULT (0)
-   );
-```
+    );
+    ```
 
 Then create an appropriate model class like this:
 
-```php
-   /**
+    ```php
+    /**
     * Sample Model instance.
     *
     * Define correct type hinting like this:
@@ -84,8 +94,8 @@ Then create an appropriate model class like this:
     * @method Sample[] findByQuery()
     * @method Sample[] collectRecords()
     */
-   class Sample extends SimpleOrm
-   {
+    class Sample extends SimpleOrm
+    {
      /**
       * Array with table fields
       *
@@ -101,8 +111,8 @@ Then create an appropriate model class like this:
       * @var string
       */
      protected static $table = 'sample';
-   }
-```
+    }
+    ```
 
 That's it.
 
@@ -110,66 +120,75 @@ That's it.
 
 There are different methods of creating new records:
 
-```php
-   $sample = new Sample(array("someName" => "abc", "bitmask" => 0));
-   $sample->save();
+    ```php
+    $sample = new Sample(array("someName" => "abc", "bitmask" => 0));
+    $sample->save();
 
-   $sample = Sample::getInst(array("someName" => "abc", "bitmask" => 0));
-   $sample->save();
+    $sample = Sample::getInst(array("someName" => "abc", "bitmask" => 0));
+    $sample->save();
 
-   $sample = new Sample();
-   $sample->set("bitmask", 0);
-   $sample->set("someName", "abc");
-   $sample->save();
-```
+    $sample = new Sample();
+    $sample->set("bitmask", 0);
+    $sample->set("someName", "abc");
+    $sample->save();
+    ```
 
 How to retrieve records:
 
-```php
-   $sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
-   print($sample->get("someName")); // prints "abc"
+    ```php
+    $sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
+    print($sample->get("someName")); // prints "abc"
 
-   $samples = Sample::getInst()->findBy("someName", "abc"); // returns array with "Sample" items
+    $samples = Sample::getInst()->findBy("someName", "abc"); // returns array with "Sample" items
 
-   foreach($samples AS $sample) {
+    foreach($samples AS $sample) {
         print($sample->get("someName")); // prints "abc"
-   }
+    }
 
-   $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE someName = ?", array("abc"));
+    $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE someName = ?", array("abc"));
 
-   foreach($samples AS $sample) {
+    foreach($samples AS $sample) {
         print($sample->get("someName")); // prints "abc"
-   }
-```
+    }
+    ```
 
 How to update and delete records:
 
-```php
-   $sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
-   print($sample->get("someName")); // prints "abc"
+    ```php
+    $sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
+    print($sample->get("someName")); // prints "abc"
 
-   $sample->set("someName", "def");
-   $sample->save(); // record now has value "def" for "someName"
+    $sample->set("someName", "def");
+    $sample->save(); // record now has value "def" for "someName"
 
-   print($sample->get("someName")); // prints "def"
+    print($sample->get("someName")); // prints "def"
 
-   $sample->del(); // record is deleted now.
-```
+    $sample->del(); // record is deleted now.
+    ```
 
 Full example:
 
-```php
+    ```php
     <?php
     require 'vendor/autoload.php';
 
     // example MySQL database on localhost
-    define('DB_DSN', 'mysql:host=localhost;port=3306;dbname=wordpress');
+    $dsn = 'mysql:host=localhost;port=3306;dbname=wordpress';
 
     // For MySQL, also define user name and password. Not used for Sqlite.
-    define('DB_USER', 'username');
-    define('DB_PASS', 'password');
+    $user = 'username';
+    $pass = 'password';
 
     use \SimpleOrm\SimpleOrm;
+
+    $simpleDb = SimpleDb::getInst($dsn, $user, $pass);
+
+    // You need to provide your own implementation of SimpleDbConfig (here we use WpDbConfig)
+    $wpDbConfig = WpDbConfig::getInst($simpleDb);
+
+    // Setup will create the database and the tables according to your SampleDbConfig implementation
+    // Obviously you want this to execute only during installation of the app.
+    $wpDbConfig->setUp();
 
     /**
      * WpUserMeta Model instance.
@@ -206,7 +225,6 @@ Full example:
     foreach ($user_metas AS $user_meta) {
       print_r($user_meta->toArray());
     }
-```
-
+    ```
 
 Have fun.
