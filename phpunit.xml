@@ -1,5 +1,5 @@
 <phpunit
-        bootstrap="./test/lib/bootstrap.php">
+        bootstrap="./vendor/autoload.php">
     <testsuites>
         <testsuite name="SimpleOrm Test Suite">
             <directory>./test/unit</directory>
