@@ -27,7 +27,7 @@ class SimpleDb
     /**
      * Do not use
      */
-    private function __construct($dsn, $user = '', $pass = '')
+    protected function __construct($dsn, $user = '', $pass = '')
     {
         $this->createDbConn($dsn, $user, $pass);
     }
@@ -95,18 +95,13 @@ class SimpleDb
             throw new \Exception("DSN has not been set. Look up docs on how to set up DB connection");
         }
 
-        $requireCredentials = preg_match("/^mysql:/i", $dsn) > 0;
+        $doNotRequireCredentials = preg_match("/^sqlite:/i", $dsn) > 0;
 
-        if ($requireCredentials && (!empty($user) || !empty($pass))) {
+        if (!$doNotRequireCredentials && (empty($user) || empty($pass))) {
             throw new \Exception("User or pass have not been set. Look up docs on how to set up DB connection");
         }
 
-        if ($requireCredentials) {
-            $this->pdo = new \PDO($dsn, $user, $pass);
-        } else {
-            $this->pdo = new \PDO($dsn);
-        }
-
+        $this->pdo = new \PDO($dsn, $user, $pass);
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 }
