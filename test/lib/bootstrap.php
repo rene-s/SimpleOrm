@@ -21,4 +21,4 @@ $dsn = 'sqlite::memory:';
 $user = 'root';
 $pass = 'root';
 
-$autoloader = require 'vendor/autoload.php';
+$autoloader = require __DIR__ . '/../../vendor/autoload.php';
