@@ -1,8 +1,5 @@
 <?php
 use SimpleOrm\SimpleDb;
-use SimpleOrm\SimpleDbConfig;
-use SimpleOrm\Tests\Sample;
-use SimpleOrm\Tests\SampleDbConfig;
 
 /**
  * SimpleOrm test

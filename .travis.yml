@@ -19,6 +19,9 @@ before_install:
 install:
   - travis_retry composer install --no-interaction --prefer-source
 
+after_install:
+  - composer dump-autoload -o
+
 # omitting "script:" will default to phpunit
 # use the $DB env variable to determine the phpunit.xml to use
 script: phpunit --configuration phpunit.xml --coverage-text test
