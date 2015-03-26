@@ -19,7 +19,7 @@ before_install:
 install:
   - travis_retry composer install --no-interaction --prefer-source
 
-after_install:
+before_script:
   - composer dump-autoload -o
 
 # omitting "script:" will default to phpunit
