@@ -202,7 +202,7 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
      */
     public function testRecordHasNoNullValue()
     {
-        $randomInt = mt_rand(4322323, 42234233344);
+        $randomInt = mt_rand(23456, 567890);
         $newSomeName = "/dont/have/a/cow/man";
 
         // create new record, set all fields
