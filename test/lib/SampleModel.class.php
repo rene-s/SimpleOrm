@@ -21,7 +21,7 @@ class Sample extends SimpleOrm
      *
      * @var array
      */
-    protected $_payload = array(
+    protected $payload = array(
         "id" => null, // first field is primary key
         "someName" => null,
         "bitmask" => null
@@ -45,7 +45,7 @@ class Sample extends SimpleOrm
     {
         $sample = $this->findOneBy("someName", $someName);
 
-        if (!($sample instanceOf Sample)) {
+        if (!($sample instanceof Sample)) {
             $sample = new Sample(array("someName" => $someName, "bitmask" => 0));
             $sample->save();
         }

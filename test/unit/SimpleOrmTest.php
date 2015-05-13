@@ -1,5 +1,7 @@
 <?php
 
+namespace SimpleOrmTest;
+
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
 use SimpleOrm\Tests\Sample;
@@ -12,7 +14,7 @@ use SimpleOrm\Tests\SampleDbConfig;
  * @subpackage TestUnit
  * @author     Rene Schmidt <rene@reneschmidt.de>
  */
-class SimpleOrmTest extends PHPUnit_Framework_TestCase
+class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var bool

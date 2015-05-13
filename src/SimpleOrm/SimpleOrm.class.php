@@ -21,7 +21,7 @@ abstract class SimpleOrm
      *
      * @var array
      */
-    protected $_payload = array();
+    protected $payload = array();
 
     /**
      * @var string
@@ -54,7 +54,7 @@ abstract class SimpleOrm
      */
     public function setPkFieldName()
     {
-        $keys = array_keys($this->_payload);
+        $keys = array_keys($this->payload);
         $this->pkFieldName = $keys[0];
     }
 
@@ -75,15 +75,15 @@ abstract class SimpleOrm
     /**
      * Getter
      *
-     * @param string $what Name of property to get
+     * @param string     $what    Name of property to get
      * @param mixed|null $default Default value in case property does not exist
      *
      * @return mixed|null
      */
     public function get($what, $default = null)
     {
-        if (array_key_exists($what, $this->_payload)) {
-            return $this->_payload[$what];
+        if (array_key_exists($what, $this->payload)) {
+            return $this->payload[$what];
         }
 
         return $default;
@@ -92,15 +92,15 @@ abstract class SimpleOrm
     /**
      * Setter
      *
-     * @param string $what Name of property to get
-     * @param mixed $value Value to be set
+     * @param string $what  Name of property to get
+     * @param mixed  $value Value to be set
      *
      * @return void
      */
     public function set($what, $value)
     {
-        if (array_key_exists($what, $this->_payload)) {
-            $this->_payload[$what] = $value;
+        if (array_key_exists($what, $this->payload)) {
+            $this->payload[$what] = $value;
         }
     }
 
@@ -113,7 +113,7 @@ abstract class SimpleOrm
      */
     public function fromArray(array $data)
     {
-        foreach ($data AS $field => $value) {
+        foreach ($data as $field => $value) {
             $this->set($field, $value);
         }
     }
@@ -122,7 +122,7 @@ abstract class SimpleOrm
      * Find one record
      *
      * @param string $field Field name
-     * @param mixed $value Value
+     * @param mixed  $value Value
      *
      * @return null|SimpleOrm
      */
@@ -141,7 +141,7 @@ abstract class SimpleOrm
      * Find records
      *
      * @param string $field Field name
-     * @param mixed $value Value
+     * @param mixed  $value Value
      *
      * @return SimpleOrm[]
      */
@@ -155,8 +155,8 @@ abstract class SimpleOrm
     /**
      * Find records by query
      *
-     * @param string $query SQL Query
-     * @param array $values Values
+     * @param string $query  SQL Query
+     * @param array  $values Values
      *
      * @return SimpleOrm[]
      */
@@ -180,7 +180,7 @@ abstract class SimpleOrm
         $returnResults = array();
         $rawResults = $sth->fetchAll(\PDO::FETCH_ASSOC);
 
-        foreach ($rawResults AS $rawResult) {
+        foreach ($rawResults as $rawResult) {
             $returnResults[] = self::getInst($rawResult);
         }
 
@@ -196,10 +196,10 @@ abstract class SimpleOrm
     {
         $sql = "INSERT INTO " . "%s" . " (%s) VALUES (%s)";
 
-        $placeholders = array_fill(0, count($this->_payload), '?');
+        $placeholders = array_fill(0, count($this->payload), '?');
 
         $id = $this->execute(
-            sprintf($sql, static::$table, implode(",", array_keys($this->_payload)), implode(",", $placeholders))
+            sprintf($sql, static::$table, implode(",", array_keys($this->payload)), implode(",", $placeholders))
         );
 
         $this->set($this->pkFieldName, $id);
@@ -214,17 +214,24 @@ abstract class SimpleOrm
      */
     public function update()
     {
-        $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE %s = " . "%d"; // only numeric PKs are supported and their name must be "id".
+        // only numeric PKs are supported and their name must be "id".
+        $sql = "UPDATE " . "%s" . " SET " . "%s" . " WHERE %s = " . "%d";
 
         // remove NULL value fields from model instance so we do not set them NULL in the DB.
         $placeholders = array_keys($this->getPayload());
 
-        foreach ($placeholders AS $k => $val) {
+        foreach ($placeholders as $k => $val) {
             $placeholders[$k] = sprintf("%s = ?", $val);
         }
 
         return $this->execute(
-            sprintf($sql, static::$table, implode(",", $placeholders), $this->pkFieldName, $this->get($this->pkFieldName))
+            sprintf(
+                $sql,
+                static::$table,
+                implode(",", $placeholders),
+                $this->pkFieldName,
+                $this->get($this->pkFieldName)
+            )
         );
     }
 
@@ -239,7 +246,7 @@ abstract class SimpleOrm
     {
         $result = array();
 
-        foreach ($this->_payload AS $key => $value) {
+        foreach ($this->payload as $key => $value) {
             if (!is_null($value)
                 || ($cleanMode === self::PAYLOAD_CLEAN_SMART && $key === $this->pkFieldName)
                 || $cleanMode === self::PAYLOAD_ORIGINAL
@@ -310,6 +317,6 @@ abstract class SimpleOrm
      */
     public function toArray()
     {
-        return $this->_payload;
+        return $this->payload;
     }
 }

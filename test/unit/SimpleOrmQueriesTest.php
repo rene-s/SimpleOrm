@@ -1,5 +1,7 @@
 <?php
 
+namespace SimpleOrmTest;
+
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
 use SimpleOrm\Tests\Sample;
@@ -12,7 +14,7 @@ use SimpleOrm\Tests\SampleDbConfig;
  * @subpackage TestUnit
  * @author     Rene Schmidt <rene@reneschmidt.de>
  */
-class SimpleOrmQueriesTest extends PHPUnit_Framework_TestCase
+class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var bool
@@ -193,7 +195,8 @@ class SimpleOrmQueriesTest extends PHPUnit_Framework_TestCase
      * 1. Have a table and model with columns a,b,c,d
      * 2. Do a findByQuery() with fields (a,b,c and NO d)
      * 3. Set new value for field b. save.
-     * 4. Look into database and see that field d of the record had been wiped (is NULL) because it has not been SELECTed in the query.
+     * 4. Look into database and see that field d of the record had been wiped
+     *    (is NULL) because it has not been SELECTed in the query.
      *
      * @return void
      */
@@ -230,19 +233,21 @@ class SimpleOrmQueriesTest extends PHPUnit_Framework_TestCase
         $records = Sample::getInst()->findByQuery("SELECT id,bitmask FROM sample WHERE bitmask = ?", array($randomInt));
         $record = $records[0];
 
-        // field someName has value NULL now. that's expected, since the model has that field and it has not been selected by the query.
+        // field someName has value NULL now. that's expected, since the
+        // model has that field and it has not been selected by the query.
         $this->assertNull($record->get("someName"));
 
         // The issue is, that in the current version (2013-11) of SimpleOrm when I save the record now, field "someName"
-        // would get a NULL value *in the database* even though I have not set it to NULL myself. That's not what we want
-        // and thus must be intercepted.
+        // would get a NULL value *in the database* even though I have not set it to NULL myself.
+        // That's not what we want and thus must be intercepted.
 
         // save record
         try {
             $record->set("bitmask", $randomInt + 1);
             $record->save();
 
-            // get record *again*. The correct result is that "someName" is not NULL but rather has remained the same.
+            // get record *again*. The correct result is that
+            // "someName" is not NULL but rather has remained the same.
             $records = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE bitmask = ?", array($randomInt + 1));
             $record = $records[0];
 

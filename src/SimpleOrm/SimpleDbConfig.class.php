@@ -17,14 +17,14 @@ abstract class SimpleDbConfig
     /**
      * @var SimpleDb
      */
-    protected $_simpleDb = null;
+    protected $simpleDb = null;
 
     /**
      * Do not use
      */
     private function __construct(SimpleDb $simpleDb)
     {
-        $this->_simpleDb = $simpleDb;
+        $this->simpleDb = $simpleDb;
     }
 
     /**

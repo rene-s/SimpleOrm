@@ -1,4 +1,6 @@
 <?php
+namespace SimpleOrmTest;
+
 use SimpleOrm\SimpleDb;
 
 /**
@@ -8,7 +10,7 @@ use SimpleOrm\SimpleDb;
  * @subpackage TestUnit
  * @author     Rene Schmidt <rene@reneschmidt.de>
  */
-class SimpleDbTest extends PHPUnit_Framework_TestCase
+class SimpleDbTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tear down stuff after each test.
@@ -99,4 +101,4 @@ class SimpleDbTest extends PHPUnit_Framework_TestCase
             );
         }
     }
-} 
+}
