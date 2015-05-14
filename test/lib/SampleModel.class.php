@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrm\Tests;
 
 use SimpleOrm\SimpleOrm;
@@ -13,6 +23,12 @@ use SimpleOrm\SimpleOrm;
  * @method Sample[] findBy()
  * @method Sample[] findByQuery()
  * @method Sample[] collectRecords()
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class Sample extends SimpleOrm
 {

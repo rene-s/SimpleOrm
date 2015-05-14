@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrmTest;
 
 use SimpleOrm\SimpleDb;
@@ -10,9 +20,11 @@ use SimpleOrm\Tests\SampleDbConfig;
 /**
  * SimpleOrm test with actual queries
  *
- * @package    SimpleOrm
- * @subpackage TestUnit
- * @author     Rene Schmidt <rene@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrm;
 
 /**
@@ -7,8 +17,11 @@ namespace SimpleOrm;
  *
  * Be aware that this ORM class expects every entity to have a numeric PK field with name "id".
  *
- * @package SimpleOrm
- * @author  Rene Schmidt <github@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 abstract class SimpleOrm
 {

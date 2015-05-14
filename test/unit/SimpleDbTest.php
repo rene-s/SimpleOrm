@@ -1,4 +1,15 @@
 <?php
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrmTest;
 
 use SimpleOrm\SimpleDb;
@@ -6,14 +17,17 @@ use SimpleOrm\SimpleDb;
 /**
  * SimpleOrm test
  *
- * @package    SimpleOrm
- * @subpackage TestUnit
- * @author     Rene Schmidt <rene@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class SimpleDbTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tear down stuff after each test.
+     * @return void
      */
     public function tearDown()
     {
@@ -23,6 +37,7 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tear down SimpleDb instance after each test.
+     * @return void
      */
     protected function tearDownSimpleDb()
     {
@@ -31,11 +46,13 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
             $simpleDb->destroy();
         } catch (\Exception $e) {
             // if there is no instance, everything is OK
+            $this->assertTrue(true);
         }
     }
 
     /**
      * CreateConn
+     * @return void
      */
     public function testCreateDbConnOk()
     {
@@ -48,6 +65,7 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
 
     /**
      * No DSN given
+     * @return void
      */
     public function testCreateDbConnNoDsnGiven()
     {
@@ -60,6 +78,7 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
 
     /**
      * No DSN given
+     * @return void
      */
     public function testCreateDbConnNoDsn()
     {
@@ -81,6 +100,7 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
 
     /**
      * login credentials are required but not given
+     * @return void
      */
     public function testCreateDbConnNoLoginCredentials()
     {

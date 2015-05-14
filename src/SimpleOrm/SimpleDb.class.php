@@ -1,12 +1,25 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrm;
 
 /**
  * Db class. Geared towards sqlite. This class does nothing special.
  *
- * @package SimpleOrm
- * @author  Rene Schmidt <github@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class SimpleDb
 {
@@ -26,6 +39,9 @@ class SimpleDb
 
     /**
      * Do not use
+     * @param string $dsn  DSN
+     * @param string $user User name
+     * @param string $pass Password
      */
     protected function __construct($dsn, $user = '', $pass = '')
     {
@@ -67,6 +83,7 @@ class SimpleDb
 
     /**
      * Destroy
+     * @return void
      */
     public function destroy()
     {
@@ -88,6 +105,7 @@ class SimpleDb
      * @param string $user User name
      * @param string $pass Password
      * @throws \Exception
+     * @return void
      */
     public function createDbConn($dsn, $user = '', $pass = '')
     {

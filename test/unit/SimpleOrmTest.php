@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrmTest;
 
 use SimpleOrm\SimpleDb;
@@ -10,9 +20,11 @@ use SimpleOrm\Tests\SampleDbConfig;
 /**
  * SimpleOrm test
  *
- * @package    SimpleOrm
- * @subpackage TestUnit
- * @author     Rene Schmidt <rene@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 {
@@ -108,6 +120,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
     /**
      * Do not process model instance fields that still are NULL. getPayload() must filter them by default,
      * except the PK field which may be null when inserting.
+     * @return void
      */
     public function testGetPayloadRemoveNullRetainPk()
     {
@@ -126,6 +139,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Instruct getPayload() to remove nothing.
+     * @return void
      */
     public function testGetPayloadRemoveNothing()
     {
@@ -148,6 +162,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Instruct getPayload() to even remove the PK field when it is NULL
+     * @return void
      */
     public function testGetPayloadRemoveNull()
     {
@@ -164,6 +179,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Verify that cloning of an SimpleDb instance is forbidden
+     * @return void
      */
     public function testCloningSimpleDbForbidden()
     {
@@ -179,6 +195,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Verify that cloning of an SimpleDbConfig instance is forbidden
+     * @return void
      */
     public function testCloningSimpleDbConfigbForbidden()
     {

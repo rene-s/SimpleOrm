@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrm\Tests;
 
 use SimpleOrm\SimpleDb;
@@ -8,8 +18,11 @@ use SimpleOrm\SimpleDbConfig;
 /**
  * Sample db config
  *
- * @package SimpleOrm
- * @author  Rene Schmidt <github@reneschmidt.de>
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 class SampleDbConfig extends SimpleDbConfig
 {

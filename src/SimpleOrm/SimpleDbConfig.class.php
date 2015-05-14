@@ -1,9 +1,25 @@
 <?php
-
+/**
+ * SimpleOrm
+ *
+ * PHP Version 5.5
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
+ */
 namespace SimpleOrm;
 
 /**
  * Config for SimpleDb
+ *
+ * @category Database
+ * @package  SimpleOrm
+ * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
+ * @link     https://reneschmidt.de/
  */
 abstract class SimpleDbConfig
 {
@@ -21,6 +37,7 @@ abstract class SimpleDbConfig
 
     /**
      * Do not use
+     * @param SimpleDb $simpleDb SimpleDB instance
      */
     private function __construct(SimpleDb $simpleDb)
     {
