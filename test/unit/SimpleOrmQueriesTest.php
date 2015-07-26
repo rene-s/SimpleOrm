@@ -107,6 +107,64 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test findBy with filter, with array
+     *
+     * @return void
+     */
+    public function testFindByWithFilterAsArray()
+    {
+        $this->createRecord(array("id" => 1, "someName" => "/Sample/Two"));
+
+        $samples = Sample::getInst()
+            ->setFilter(function ($inst) {
+                $inst['someName'] .= 'x';
+                return $inst;
+            })
+            ->findBy("someName", "/Sample/Two", \PDO::FETCH_ASSOC);
+
+        $this->assertInternalType("array", $samples);
+        $this->assertSame(1, count($samples));
+        $this->assertInternalType("array", $samples[0]);
+        $this->assertSame("/Sample/Twox", $samples[0]["someName"]);
+    }
+
+    /**
+     * Test findBy with filter, with objects
+     *
+     * @return void
+     */
+    public function testFindByWithFilter()
+    {
+        $this->createRecord(array("id" => 2, "someName" => "/Sample/Three"));
+
+        $samples = Sample::getInst()->setFilter(function ($inst) {
+            $inst['someName'] .= 'x';
+            return $inst;
+        })->findBy("someName", "/Sample/Three");
+
+        $this->assertInternalType("array", $samples);
+        $this->assertSame(1, count($samples));
+        $this->assertInstanceOf("\\SimpleOrm\\Tests\\Sample", $samples[0]);
+        $this->assertSame("/Sample/Threex", $samples[0]->get("someName"));
+    }
+
+    /**
+     * Test findBy with filter, but without results
+     *
+     * @return void
+     */
+    public function testFindByWithFilterWithoutResults()
+    {
+        $samples = Sample::getInst()->setFilter(function ($inst) {
+            $inst['someName'] .= 'x';
+            return $inst;
+        })->findBy("someName", "doesnotexist");
+
+        $this->assertInternalType("array", $samples);
+        $this->assertSame(0, count($samples));
+    }
+
+    /**
      * Test insert
      *
      * @return void

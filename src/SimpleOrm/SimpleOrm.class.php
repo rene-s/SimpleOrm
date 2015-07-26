@@ -12,6 +12,8 @@
  */
 namespace SimpleOrm;
 
+use Closure;
+
 /**
  * Simple ORM.
  *
@@ -45,6 +47,11 @@ abstract class SimpleOrm
      * @var string
      */
     protected $pkFieldName = "";
+
+    /**
+     * @var Closure|null
+     */
+    protected $findFilter = null;
 
     /**
      * Constructor
@@ -185,6 +192,17 @@ abstract class SimpleOrm
     }
 
     /**
+     * Set find filter
+     * @param Closure $filter Filter closure
+     * @return self
+     */
+    public function setFilter(Closure $filter)
+    {
+        $this->findFilter = $filter;
+        return $this;
+    }
+
+    /**
      * Collect records
      *
      * @param \PDOStatement $sth       PDOStatement instance
@@ -192,10 +210,19 @@ abstract class SimpleOrm
      *
      * @return SimpleOrm[]
      */
-    protected function collectRecords(\PDOStatement $sth, $fetchMode = \PDO::FETCH_OBJ)
-    {
+    protected function collectRecords(
+        \PDOStatement $sth,
+        $fetchMode = \PDO::FETCH_OBJ
+    ) {
         $returnResults = array();
         $rawResults = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (!is_null($this->findFilter)) {
+            $amount = count($rawResults);
+            for ($i = 0; $i < $amount; $i++) {
+                $rawResults[$i] = call_user_func($this->findFilter, $rawResults[$i]);
+            }
+        }
 
         if ($fetchMode === \PDO::FETCH_ASSOC) {
             return $rawResults;
