@@ -165,6 +165,20 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test default get()
+     *
+     * @return void
+     */
+    public function testGet()
+    {
+        $newSample = new Sample();
+        $newSample->set("someName", "/Aye/Bee/Cee");
+
+        $this->assertSame('/Aye/Bee/Cee', $newSample->get('someName'));
+        $this->assertSame('default', $newSample->get('doesnotexist', 'default'));
+    }
+
+    /**
      * Test insert
      *
      * @return void

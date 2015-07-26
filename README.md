@@ -140,15 +140,26 @@ How to retrieve records:
     print($sample->get("someName")); // prints "abc"
 
     $samples = Sample::getInst()->findBy("someName", "abc"); // returns array with "Sample" items
+    $samples = Sample::getInst()->findBy("someName", "abc", \PDO\FETCH_ASSOC); // returns array with "Sample" array
 
     foreach($samples AS $sample) {
         print($sample->get("someName")); // prints "abc"
     }
 
-    $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE someName = ?", array("abc"));
+    $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE someName = ?", ["abc"]);
 
     foreach($samples AS $sample) {
         print($sample->get("someName")); // prints "abc"
+    }
+
+    // apply filter
+    $samples = Sample::getInst()->setFilter(function($inst) {
+        $inst['someName'] = $inst['someName'] . 'x'; // apply filter to array
+        return $inst;
+    })->findByQuery("SELECT * FROM sample WHERE someName = ?", ["abc"]);
+
+    foreach($samples AS $sample) {
+        print($sample->get("someName")); // prints "abcx"
     }
     ```
 
