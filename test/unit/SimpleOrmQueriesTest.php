@@ -90,6 +90,23 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test findBy, return results as array
+     *
+     * @return void
+     */
+    public function testFindByReturnAsArray()
+    {
+        $this->createRecord(array("id" => 1, "someName" => "/Sample/Two"));
+
+        $samples = Sample::getInst()->findBy("someName", "/Sample/Two", \PDO::FETCH_ASSOC);
+
+        $this->assertInternalType("array", $samples);
+        $this->assertSame(1, count($samples));
+        $this->assertInternalType("array", $samples[0]);
+        $this->assertSame("/Sample/Two", $samples[0]["someName"]);
+    }
+
+    /**
      * Test insert
      *
      * @return void

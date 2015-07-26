@@ -134,14 +134,15 @@ abstract class SimpleOrm
     /**
      * Find one record
      *
-     * @param string $field Field name
-     * @param mixed  $value Value
+     * @param string $field     Field name
+     * @param mixed  $value     Value
+     * @param int    $fetchMode Fetch mode
      *
      * @return null|SimpleOrm
      */
-    public function findOneBy($field, $value)
+    public function findOneBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
     {
-        $result = $this->findBy($field, $value);
+        $result = $this->findBy($field, $value, $fetchMode);
 
         if (empty($result)) {
             return null;
@@ -153,45 +154,52 @@ abstract class SimpleOrm
     /**
      * Find records
      *
-     * @param string $field Field name
-     * @param mixed  $value Value
+     * @param string $field     Field name
+     * @param mixed  $value     Value
+     * @param int    $fetchMode Fetch mode
      *
      * @return SimpleOrm[]
      */
-    public function findBy($field, $value)
+    public function findBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
     {
         $query = "SELECT * FROM " . static::$table . " WHERE " . $field . " = ?";
 
-        return $this->findByQuery($query, array($value));
+        return $this->findByQuery($query, array($value), $fetchMode);
     }
 
     /**
      * Find records by query
      *
-     * @param string $query  SQL Query
-     * @param array  $values Values
+     * @param string $query     SQL Query
+     * @param array  $values    Values
+     * @param int    $fetchMode Fetch mode
      *
      * @return SimpleOrm[]
      */
-    public function findByQuery($query, array $values)
+    public function findByQuery($query, array $values, $fetchMode = \PDO::FETCH_OBJ)
     {
         $sth = SimpleDb::getInst()->pdo->prepare($query);
         $sth->execute($values);
 
-        return $this->collectRecords($sth);
+        return $this->collectRecords($sth, $fetchMode);
     }
 
     /**
      * Collect records
      *
-     * @param \PDOStatement $sth PDOStatement instance
+     * @param \PDOStatement $sth       PDOStatement instance
+     * @param int           $fetchMode Fetch mode
      *
      * @return SimpleOrm[]
      */
-    protected function collectRecords(\PDOStatement $sth)
+    protected function collectRecords(\PDOStatement $sth, $fetchMode = \PDO::FETCH_OBJ)
     {
         $returnResults = array();
         $rawResults = $sth->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($fetchMode === \PDO::FETCH_ASSOC) {
+            return $rawResults;
+        }
 
         foreach ($rawResults as $rawResult) {
             $returnResults[] = self::getInst($rawResult);

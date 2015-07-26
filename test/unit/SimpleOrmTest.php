@@ -185,12 +185,8 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
     {
         $simpleDb = SimpleDb::getInst();
 
-        try {
-            $cloned = clone $simpleDb;
-            $this->fail("Exception expected, cloning SimpleDb is forbidden");
-        } catch (\Exception $e) {
-            $this->assertInstanceOf("\Exception", $e);
-        }
+        $this->setExpectedException('Exception');
+        $cloned = clone $simpleDb;
     }
 
     /**
@@ -202,11 +198,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
         $simpleDb = SimpleDb::getInst();
         $simpleDbConfig = SimpleDbConfig::getInst($simpleDb);
 
-        try {
-            $cloned = clone $simpleDbConfig;
-            $this->fail("Exception expected, cloning SimpleDbConfig is forbidden");
-        } catch (\Exception $e) {
-            $this->assertInstanceOf("\Exception", $e);
-        }
+        $this->setExpectedException('Exception');
+        $cloned = clone $simpleDbConfig;
     }
 }
