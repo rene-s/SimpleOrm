@@ -196,7 +196,7 @@ abstract class SimpleOrm
      * @param Closure $filter Filter closure
      * @return self
      */
-    public function setFilter(Closure $filter)
+    public function setFilter(Closure $filter = null)
     {
         $this->findFilter = $filter;
         return $this;
