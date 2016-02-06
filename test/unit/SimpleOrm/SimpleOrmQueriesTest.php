@@ -10,10 +10,9 @@
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
  * @link     https://reneschmidt.de/
  */
-namespace SimpleOrmTest;
+namespace SimpleOrm\Tests\SimpleOrm;
 
 use SimpleOrm\SimpleDb;
-use SimpleOrm\SimpleDbConfig;
 use SimpleOrm\Tests\Sample;
 use SimpleOrm\Tests\SampleDbConfig;
 
@@ -66,7 +65,7 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
         $pdo = SimpleDb::getInst()->pdo;
 
         $pdo->exec(
-            "INSERT INTO sample ("
+            "INSERT " . "INTO sample ("
             . implode(",", array_keys($data)) . ") VALUES ('"
             . implode("','", array_values($data)) . "')"
         );
@@ -237,13 +236,13 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
     {
         $this->createRecord(array("id" => 1, "someName" => "/Sample/One"));
 
-        $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE id = ?", array(1));
+        $samples = Sample::getInst()->findByQuery("SELECT * " . "FROM sample WHERE id = ?", array(1));
 
         $this->assertInternalType("array", $samples);
         $this->assertSame(1, count($samples));
         $this->assertEquals(1, $samples[0]->get("id"));
 
-        $samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE id > ?", array(1));
+        $samples = Sample::getInst()->findByQuery("SELECT * " . "FROM sample WHERE id > ?", array(1));
 
         $this->assertInternalType("array", $samples);
         $this->assertEmpty($samples);
@@ -313,7 +312,7 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
         $sampleOne->save();
 
         // retrieve all fields of that record again
-        $records = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE bitmask = ?", array($randomInt));
+        $records = Sample::getInst()->findByQuery("SELECT * " . "FROM sample WHERE bitmask = ?", array($randomInt));
         $record = $records[0];
 
         $id = $record->get("id");
@@ -323,7 +322,7 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
         $record->save();
 
         // get again, verify field values
-        $records = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE bitmask = ?", array($randomInt));
+        $records = Sample::getInst()->findByQuery("SELECT * " . "FROM sample WHERE bitmask = ?", array($randomInt));
         $record = $records[0];
 
         $this->assertSame($id, $record->get("id"));
@@ -331,7 +330,11 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($randomInt, $record->get("bitmask"));
 
         // now: get the same record, but select id,bitmask only.
-        $records = Sample::getInst()->findByQuery("SELECT id,bitmask FROM sample WHERE bitmask = ?", array($randomInt));
+        $records = Sample::getInst()->findByQuery(
+            "SELECT id,bitmask " . "FROM sample WHERE bitmask = ?",
+            array($randomInt)
+        );
+
         $record = $records[0];
 
         // field someName has value NULL now. that's expected, since the
@@ -349,14 +352,18 @@ class SimpleOrmQueriesTest extends \PHPUnit_Framework_TestCase
 
             // get record *again*. The correct result is that
             // "someName" is not NULL but rather has remained the same.
-            $records = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE bitmask = ?", array($randomInt + 1));
+            $records = Sample::getInst()->findByQuery(
+                "SELECT * " . "FROM sample WHERE bitmask = ?",
+                array($randomInt + 1)
+            );
+
             $record = $records[0];
 
             $this->assertEquals($id, $record->get("id"));
             $this->assertEquals($newSomeName, $record->get("someName"));
             $this->assertEquals($randomInt + 1, $record->get("bitmask"));
         } catch (\Exception $e) {
-            $this->fail("No exception expected: ", $e->getMessage());
+            $this->fail("No exception expected: " . $e->getMessage());
         }
     }
 }

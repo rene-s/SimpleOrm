@@ -10,7 +10,7 @@
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
  * @link     https://reneschmidt.de/
  */
-namespace SimpleOrmTest;
+namespace SimpleOrm\Tests\SimpleOrm;
 
 use SimpleOrm\SimpleDb;
 use SimpleOrm\SimpleDbConfig;
@@ -66,7 +66,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
         $pdo = SimpleDb::getInst()->pdo;
 
         $pdo->exec(
-            "INSERT INTO sample ("
+            "INSERT " . "INTO sample ("
             . implode(",", array_keys($data)) . ") VALUES ('"
             . implode("','", array_values($data)) . "')"
         );
@@ -193,7 +193,7 @@ class SimpleOrmTest extends \PHPUnit_Framework_TestCase
      * Verify that cloning of an SimpleDbConfig instance is forbidden
      * @return void
      */
-    public function testCloningSimpleDbConfigbForbidden()
+    public function testCloningSimpleDbConfigForbidden()
     {
         $simpleDb = SimpleDb::getInst();
         $simpleDbConfig = SimpleDbConfig::getInst($simpleDb);

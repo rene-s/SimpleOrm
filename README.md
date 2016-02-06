@@ -89,10 +89,10 @@ Then create an appropriate model class like this:
     *
     * Define correct type hinting like this:
     *
-    * @method Sample findOneBy()
-    * @method Sample[] findBy()
-    * @method Sample[] findByQuery()
-    * @method Sample[] collectRecords()
+    * @method Sample findOneBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
+    * @method Sample[] findBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
+    * @method Sample[] findByQuery($query, array $values, $fetchMode = \PDO::FETCH_OBJ)
+    * @method Sample[] collectRecords(\PDOStatement $sth, $fetchMode = \PDO::FETCH_OBJ)
     */
     class Sample extends SimpleOrm
     {
@@ -101,7 +101,7 @@ Then create an appropriate model class like this:
       *
       * @var array
       */
-     protected $_payload = array(
+     protected $payload = array(
        "id" => null, // first field is primary key
        "someName" => null,
        "bitmask" => null
@@ -218,7 +218,7 @@ Full example:
        *
        * @var array
        */
-      protected $_payload = array(
+      protected $payload = array(
         'umeta_id' => null,
         'user_id' => null,
         'meta_key' => null,

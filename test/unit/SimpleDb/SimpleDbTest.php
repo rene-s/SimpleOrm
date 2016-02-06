@@ -10,7 +10,7 @@
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
  * @link     https://reneschmidt.de/
  */
-namespace SimpleOrmTest;
+namespace SimpleOrm\Tests\SimpleDb;
 
 use SimpleOrm\SimpleDb;
 
@@ -70,7 +70,7 @@ class SimpleDbTest extends \PHPUnit_Framework_TestCase
     public function testCreateDbConnNoDsnGiven()
     {
         try {
-            $simpleDb = SimpleDb::getInst();
+            SimpleDb::getInst();
         } catch (\Exception $e) {
             $this->assertSame("No DSN given", $e->getMessage());
         }

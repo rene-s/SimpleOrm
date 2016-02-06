@@ -19,10 +19,10 @@ use SimpleOrm\SimpleOrm;
  *
  * Define correct type hinting like this:
  *
- * @method Sample findOneBy()
- * @method Sample[] findBy()
- * @method Sample[] findByQuery()
- * @method Sample[] collectRecords()
+ * @method Sample findOneBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
+ * @method Sample[] findBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
+ * @method Sample[] findByQuery($query, array $values, $fetchMode = \PDO::FETCH_OBJ)
+ * @method Sample[] collectRecords(\PDOStatement $sth, $fetchMode = \PDO::FETCH_OBJ)
  *
  * @category Database
  * @package  SimpleOrm

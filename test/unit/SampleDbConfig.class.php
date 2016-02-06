@@ -32,16 +32,6 @@ class SampleDbConfig extends SimpleDbConfig
     public $simpleDb = null;
 
     /**
-     * Constructor
-     *
-     * @param SimpleDb $simpleDb SimpleDb instance
-     */
-    public function __construct(SimpleDb $simpleDb)
-    {
-        $this->simpleDb = $simpleDb;
-    }
-
-    /**
      * Set up database.
      *
      * @return mixed|void
@@ -49,16 +39,16 @@ class SampleDbConfig extends SimpleDbConfig
     public function setUp()
     {
         $this->simpleDb->pdo->beginTransaction();
-        $this->simpleDb->pdo->exec("DROP TABLE IF EXISTS sample");
+        $this->simpleDb->pdo->exec("DROP " . "TABLE IF EXISTS sample");
 
         //sqlite
         $this->simpleDb->pdo->exec(
-            'CREATE TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,' .
+            'CREATE ' . 'TABLE sample ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,' .
             '"someName" TEXT NOT NULL,"bitmask" INTEGER NOT NULL DEFAULT (0));'
         );
 
         $this->simpleDb->pdo->exec(
-            "CREATE UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)"
+            "CREATE " . "UNIQUE INDEX IF NOT EXISTS uniqueSomeNameIdx ON sample(someName)"
         );
 
         //mysql

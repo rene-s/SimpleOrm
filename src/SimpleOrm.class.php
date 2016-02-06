@@ -169,7 +169,7 @@ abstract class SimpleOrm
      */
     public function findBy($field, $value, $fetchMode = \PDO::FETCH_OBJ)
     {
-        $query = "SELECT * FROM " . static::$table . " WHERE " . $field . " = ?";
+        $query = "SELECT " . "* FROM " . static::$table . " WHERE " . $field . " = ?";
 
         return $this->findByQuery($query, array($value), $fetchMode);
     }
@@ -242,7 +242,7 @@ abstract class SimpleOrm
      */
     public function insert()
     {
-        $sql = "INSERT INTO " . "%s" . " (%s) VALUES (%s)";
+        $sql = "INSERT " . "INTO " . "%s" . " (%s) VALUES (%s)";
 
         $placeholders = array_fill(0, count($this->payload), '?');
 
@@ -317,7 +317,7 @@ abstract class SimpleOrm
             return false;
         }
 
-        $sql = sprintf("DELETE FROM " . "%s" . " WHERE " . $this->pkFieldName . " = ?", static::$table);
+        $sql = sprintf("DELETE " . "FROM " . "%s" . " WHERE " . $this->pkFieldName . " = ?", static::$table);
 
         SimpleDb::getInst()->pdo->prepare($sql)->execute(array($this->get($this->pkFieldName)));
 
