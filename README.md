@@ -85,7 +85,7 @@ Let's assume you have a table like this:
 ```
 CREATE TABLE sample (
  "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,
- "someName" TEXT NOT null,
+ "some_name" TEXT NOT null,
  "bitmask" INTEGER NOT null DEFAULT (0)
 );
 ```
@@ -112,7 +112,7 @@ class Sample extends SimpleOrm
   */
  protected $payload = array(
    "id" => null, // first field is primary key
-   "someName" => null,
+   "some_name" => null,
    "bitmask" => null
  );
 
@@ -130,58 +130,58 @@ That's it.
 There are different methods of creating new records:
 
 ```
-$sample = new Sample(array("someName" => "abc", "bitmask" => 0));
+$sample = new Sample(array("some_name" => "abc", "bitmask" => 0));
 $sample->save();
 
-$sample = Sample::getInst(array("someName" => "abc", "bitmask" => 0));
+$sample = Sample::getInst(array("some_name" => "abc", "bitmask" => 0));
 $sample->save();
 
 $sample = new Sample();
 $sample->set("bitmask", 0);
-$sample->set("someName", "abc");
+$sample->set("some_name", "abc");
 $sample->save();
 ```
 
 How to retrieve records:
 
 ```
-$sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
-print($sample->get("someName")); // prints "abc"
+$sample = Sample::getInst()->findOneBy("some_name", "abc"); // returns record of type "Sample"
+print($sample->get("some_name")); // prints "abc"
 
-$samples = Sample::getInst()->findBy("someName", "abc"); // returns array with "Sample" items
-$samples = Sample::getInst()->findBy("someName", "abc", \PDO\FETCH_ASSOC); // returns array with "Sample" array
+$samples = Sample::getInst()->findBy("some_name", "abc"); // returns array with "Sample" items
+$samples = Sample::getInst()->findBy("some_name", "abc", \PDO\FETCH_ASSOC); // returns array with "Sample" array
 
 foreach($samples AS $sample) {
-    print($sample->get("someName")); // prints "abc"
+    print($sample->get("some_name")); // prints "abc"
 }
 
-$samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE someName = ?", ["abc"]);
+$samples = Sample::getInst()->findByQuery("SELECT * FROM sample WHERE some_name = ?", ["abc"]);
 
 foreach($samples AS $sample) {
-    print($sample->get("someName")); // prints "abc"
+    print($sample->get("some_name")); // prints "abc"
 }
 
 // apply filter
 $samples = Sample::getInst()->setFilter(function($inst) {
-    $inst['someName'] = $inst['someName'] . 'x'; // apply filter to array
+    $inst['some_name'] = $inst['some_name'] . 'x'; // apply filter to array
     return $inst;
-})->findByQuery("SELECT * FROM sample WHERE someName = ?", ["abc"]);
+})->findByQuery("SELECT * FROM sample WHERE some_name = ?", ["abc"]);
 
 foreach($samples AS $sample) {
-    print($sample->get("someName")); // prints "abcx"
+    print($sample->get("some_name")); // prints "abcx"
 }
 ```
 
 How to update and delete records:
 
 ```
-$sample = Sample::getInst()->findOneBy("someName", "abc"); // returns record of type "Sample"
-print($sample->get("someName")); // prints "abc"
+$sample = Sample::getInst()->findOneBy("some_name", "abc"); // returns record of type "Sample"
+print($sample->get("some_name")); // prints "abc"
 
-$sample->set("someName", "def");
-$sample->save(); // record now has value "def" for "someName"
+$sample->set("some_name", "def");
+$sample->save(); // record now has value "def" for "some_name"
 
-print($sample->get("someName")); // prints "def"
+print($sample->get("some_name")); // prints "def"
 
 $sample->del(); // record is deleted now.
 ```
