@@ -8,7 +8,16 @@ This is a no-frills simple [ORM](https://en.wikipedia.org/wiki/Object-relational
   - be clean.
 
 It is **not** a goal to be compatible with other DBMS than sqlite and MySQL (at the moment) or to implement feature X that
-other ORM Y already has.
+other ORM Y already has. It might not even fit into the traditional ORM paradigm.
+
+## German Web Application Developer Available for Hire!
+
+No marketing skills whatsoever, but low rates, nearly 20 years of experience, and german work attitude.
+
+Get in touch now: https://www.reneschmidt.de/DevOps/#contact
+
+[![Build Status](https://travis-ci.org/rene-s/SimpleOrm.svg)](https://travis-ci.org/rene-s/Seafile-PHP-SDK)
+[![License](https://img.shields.io/badge/License-LGPL-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 
 # Requirements
 
@@ -73,7 +82,7 @@ when the database does not exist yet.
 
 Let's assume you have a table like this:
 
-   ```sql
+   ```
     CREATE TABLE sample (
      "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT null,
      "someName" TEXT NOT null,
