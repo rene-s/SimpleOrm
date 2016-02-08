@@ -16,7 +16,7 @@ No marketing skills whatsoever, but low rates, nearly 20 years of experience, an
 
 Get in touch now: https://www.reneschmidt.de/DevOps/#contact
 
-[![Build Status](https://travis-ci.org/rene-s/SimpleOrm.svg)](https://travis-ci.org/rene-s/Seafile-PHP-SDK)
+[![Build Status](https://travis-ci.org/rene-s/SimpleOrm.svg)](https://travis-ci.org/rene-s/SimpleOrm)
 [![License](https://img.shields.io/badge/License-LGPL-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 
 # Requirements
@@ -36,7 +36,7 @@ Me:
 
 # Licence
 
-GPL v3 or commercial licence :) from github@reneschmidt.de. Do not use this in your closed source project
+GPL v3 or commercial licence :) from rene+_gth@reneschmidt.de. Do not use this in your closed source project
 without paying me. I don't like that.
 
 # How to use

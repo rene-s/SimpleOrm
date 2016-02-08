@@ -6,7 +6,7 @@
  *
  * @category Database
  * @package  SimpleOrm
- * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@reneschmidt.de>
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
  * @link     https://reneschmidt.de/
  */
@@ -26,7 +26,7 @@ use SimpleOrm\SimpleOrm;
  *
  * @category Database
  * @package  SimpleOrm
- * @author   Rene Schmidt <rene@reneschmidt.de>
+ * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@reneschmidt.de>
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
  * @link     https://reneschmidt.de/
  */
