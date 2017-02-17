@@ -14,7 +14,7 @@ other ORM Y already has. It might not even fit into the traditional ORM paradigm
 
 No marketing skills whatsoever, but low rates, nearly 20 years of experience, and german work attitude.
 
-Get in touch now: https://www.reneschmidt.de/DevOps/#contact
+Get in touch now: https://www.sdo.sh/DevOps/#contact
 
 [![Build Status](https://travis-ci.org/rene-s/SimpleOrm.svg)](https://travis-ci.org/rene-s/SimpleOrm)
 [![License](https://img.shields.io/badge/License-LGPL-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
@@ -31,12 +31,12 @@ PHP 5.3 + php-sqlite
 
 Me:
 
-1. https://reneschmidt.de/wiki/index.php/page/view/SimpleOrm,Start
-2. https://reneschmidt.de/
+1. [https://sdo.sh/](https://sdo.sh/)
+1. [I am available for hire](mailto:rene+_gth@sdo.sh)
 
 # Licence
 
-GPL v3 or commercial licence :) from rene+_gth@reneschmidt.de. Do not use this in your closed source project
+GPL v3 or commercial licence :) from rene+_gth@sdo.sh. Do not use this in your closed source project
 without paying me. I don't like that.
 
 # How to use

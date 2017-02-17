@@ -4,12 +4,14 @@ language: php
 php:
   # using major version aliases
 
-  # aliased to a recent 5.4.x version
-  - 5.4
-  # aliased to a recent 5.5.x version
-  - 5.5
-  # aliased to a recent 5.6.x version
+  # the oldest version supported by this package
+  - 5.3
+
+  # the most recent 5.x version supported by this package
   - 5.6
+
+  # the most recent version supported by this package
+  - 7.1
 
 install:
   - sh ./bin/prepare_tests.sh

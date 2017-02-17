@@ -32,7 +32,8 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="tap" target="/tmp/phpunit-result/simpleorm-php-sdk-current-tap.txt"/>
-        <log type="coverage-html" target="/tmp/phpunit-result/simpleorm-php-sdk-current" showUncoveredFiles="true"/>
+        <log type="coverage-clover" target="/tmp/simpleorm-clover.xml"/>
+        <log type="coverage-html" target="/tmp/phpunit-result/simpleorm-current" showUncoveredFiles="true"/>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
 </phpunit>

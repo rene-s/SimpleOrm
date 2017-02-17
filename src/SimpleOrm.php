@@ -6,9 +6,9 @@
  *
  * @category Database
  * @package  SimpleOrm
- * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@reneschmidt.de>
+ * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@sdo.sh>
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
- * @link     https://reneschmidt.de/
+ * @link     https://sdo.sh/
  */
 namespace SimpleOrm;
 
@@ -21,9 +21,9 @@ use Closure;
  *
  * @category Database
  * @package  SimpleOrm
- * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@reneschmidt.de>
+ * @author   Rene Schmidt DevOps UG (haftungsbeschränkt) & Co. KG <rene@sdo.sh>
  * @license  https://www.gnu.org/licenses/lgpl.html LGPLv3
- * @link     https://reneschmidt.de/
+ * @link     https://sdo.sh/
  */
 abstract class SimpleOrm
 {
