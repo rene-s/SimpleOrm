@@ -2,7 +2,7 @@ node {
     stage("Unit testing") {
         checkout scm
 
-        docker.image('composer').inside {
+        docker.build("composer", "-f ./Dockerfile .").inside {
             stage("Prepare") {
                 sh 'rm -rf ./build/{logs,pdepend} 2> /dev/null'
                 sh 'mkdir -p ./build/{logs,pdepend}'
